@@ -1,0 +1,38 @@
+{
+  "infinityValue": {
+    "$type": "number",
+    "value": "Infinity"
+  },
+  "nanValue": {
+    "$type": "number",
+    "value": "NaN"
+  },
+  "setValue": {
+    "$type": "Set",
+    "value": [
+      "item1",
+      "item2"
+    ]
+  },
+  "mapValue": {
+    "$type": "Map",
+    "value": {
+      "key1": "item1",
+      "key2": "item2"
+    }
+  },
+  "promiseValue": {
+    "$type": "Promise"
+  },
+  "functionValue": {
+    "$type": "Function"
+  },
+  "dateValue": {
+    "$type": "Date",
+    "value": "2000-01-01T12:34:56.000Z"
+  },
+  "symbolValue": {
+    "$type": "Symbol",
+    "value": "description"
+  }
+}

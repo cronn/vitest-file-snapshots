@@ -1,0 +1,16 @@
+{
+  "infinityValue": "[Infinity]",
+  "nanValue": "[NaN]",
+  "setValue": [
+    "item1",
+    "item2"
+  ],
+  "mapValue": {
+    "key1": "item1",
+    "key2": "item2"
+  },
+  "promiseValue": "[Promise]",
+  "functionValue": "[Function]",
+  "dateValue": "[2000-01-01T12:34:56.000Z]",
+  "symbolValue": "[Symbol(description)]"
+}

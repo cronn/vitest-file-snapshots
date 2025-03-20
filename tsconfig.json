@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "strict": true,
+    "erasableSyntaxOnly": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "isolatedModules": true,
+    "incremental": true,
+    "outDir": "./types",
+    "lib": ["esnext"],
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationMap": true,
+    "skipLibCheck": true,
+    "emitDeclarationOnly": true,
+  },
+  "include": [
+    "vitest.config.ts",
+    "tsup.config.ts",
+    "eslint.config.js",
+    "./src/**/*.ts"
+  ]
+}

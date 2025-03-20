@@ -1,0 +1,14 @@
+[
+  "value",
+  true,
+  4711,
+  null,
+  "[undefined]",
+  [
+    "item1",
+    "item2"
+  ],
+  {
+    "key": "value"
+  }
+]

@@ -1,0 +1,16 @@
+[
+  "value",
+  true,
+  4711,
+  null,
+  {
+    "$type": "undefined"
+  },
+  [
+    "item1",
+    "item2"
+  ],
+  {
+    "key": "value"
+  }
+]
