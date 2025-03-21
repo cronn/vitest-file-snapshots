@@ -1,8 +1,0 @@
-# pnpm
-pnpm-lock.yaml
-
-# IntelliJ
-.idea/
-
-# validation files
-**/data/test/
