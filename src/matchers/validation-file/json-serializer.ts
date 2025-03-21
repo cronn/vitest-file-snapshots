@@ -17,7 +17,7 @@ export function serializeAsJson(
   value: unknown,
   options: JsonSerializerOptions,
 ): SerializerResult {
-  if (!(typeof value === "object")) {
+  if (!isObject(value)) {
     throw new Error(
       `Value of type ${typeof value} cannot be serialized as JSON.`,
     );
