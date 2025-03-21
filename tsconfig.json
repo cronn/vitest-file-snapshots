@@ -14,7 +14,7 @@
     "declaration": true,
     "declarationMap": true,
     "skipLibCheck": true,
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": true
   },
   "include": [
     "vitest.config.ts",
