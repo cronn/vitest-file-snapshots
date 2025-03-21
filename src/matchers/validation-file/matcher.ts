@@ -12,6 +12,7 @@ import {
   TEST_PATH_SEPARATOR,
   VALIDATION_FOLDER,
 } from "./config";
+import { isArray, isObject } from "./guards";
 
 export interface MatchValidationFileOptions {
   suffix?: string;
@@ -82,7 +83,7 @@ function serializeValue(
   value: unknown,
   includeUndefinedObjectProperties = false,
 ): SerializerResult {
-  if (typeof value === "object" && value !== null) {
+  if (isArray(value) || isObject(value)) {
     return serializeAsJson(value, { includeUndefinedObjectProperties });
   }
 
