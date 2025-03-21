@@ -1,5 +1,6 @@
-# IDEs
+# IntelliJ
 /.idea
+*.iml
 
 # dependencies
 /node_modules
