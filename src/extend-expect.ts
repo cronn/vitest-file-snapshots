@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type, @typescript-eslint/no-explicit-any */
 import { expect } from "vitest";
 
 import * as matchers from "./matchers";
