@@ -1,17 +1,15 @@
-name: CI Pipeline
+name: Pull request pipeline
 
 on:
   pull_request:
-    branches:
-      - main
 
 env:
   NODE_VERSION: 22.14.0
   PNPM_VERSION: 10.6.5
 
 jobs:
-  validate:
-    name: Validate Code
+  check:
+    name: Run CI checks
     runs-on: ubuntu-22.04
 
     steps:
@@ -32,5 +30,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run CI
+      - name: Run CI script
         run: pnpm run ci
