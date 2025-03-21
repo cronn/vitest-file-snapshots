@@ -1,7 +1,7 @@
 # pnpm
 pnpm-lock.yaml
 
-# IDEs
+# IntelliJ
 .idea/
 
 # validation files
