@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+
 import { normalizeTestName } from "./normalizers";
 
 describe("normalize test name", () => {
