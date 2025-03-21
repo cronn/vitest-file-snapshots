@@ -1,0 +1,8 @@
+# pnpm
+pnpm-lock.yaml
+
+# IDEs
+.idea/
+
+# validation files
+**/data/test/
