@@ -1,10 +1,29 @@
 {
   "name": "@cronn/vitest-file-snapshots",
   "version": "0.0.1",
-  "type": "module",
+  "description": "Wriote tests with Vitest using file snapshots",
+  "keywords": [
+    "vitest",
+    "file snapshots"
+  ],
+  "bugs": {
+    "url": "https://github.com/cronn/vitest-file-snapshots/issues"
+  },
+  "author": "cronn",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cronn/vitest-file-snapshots.git"
+  },
+  "homepage": "https://github.com/cronn/vitest-file-snapshots",
   "engines": {
     "node": ">=22",
     "pnpm": ">=10"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "scripts": {
     "format": "prettier --write src/**/*",
@@ -18,12 +37,18 @@
     "check": "pnpm format:check && pnpm lint && test",
     "build": "pnpm compile:types && pnpm compile:lib"
   },
+  "type": "module",
   "exports": {
+    "./package.json": "./package.json",
     "./extend-expect": {
       "types": "./types/src/extend-expect.d.ts",
       "import": "./lib/extend-expect.js"
     }
   },
+  "files": [
+    "types",
+    "lib"
+  ],
   "devDependencies": {
     "@eslint/compat": "1.2.7",
     "@eslint/eslintrc": "3.3.0",
@@ -43,10 +68,5 @@
   },
   "peerDependencies": {
     "vitest": "3.0.8"
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild"
-    ]
   }
 }
