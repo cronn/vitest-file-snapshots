@@ -70,5 +70,5 @@ jobs:
       - name: Compile TypeScript types
         run: pnpm compile:types
 
-      - name: Bundle project
-        run: pnpm compile:bundle
+      - name: Compile library
+        run: pnpm compile:lib
