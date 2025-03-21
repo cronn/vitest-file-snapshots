@@ -1,5 +1,5 @@
 import {
-  MatchValidationFileOptions,
+  type MatchValidationFileOptions,
   toMatchValidationFile,
 } from "./validation-file/matcher";
 

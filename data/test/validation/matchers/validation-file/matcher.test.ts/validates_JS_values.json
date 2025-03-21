@@ -26,7 +26,7 @@
   },
   "functionValue": {
     "$type": "function",
-    "name": "functionValue"
+    "name": "functionName"
   },
   "dateValue": {
     "$type": "Date",

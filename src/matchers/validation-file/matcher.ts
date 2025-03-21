@@ -1,6 +1,6 @@
-import { ExpectationResult, MatcherState } from "@vitest/expect";
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import type { ExpectationResult, MatcherState } from "@vitest/expect";
 import "vitest";
 
 import {
@@ -11,7 +11,7 @@ import {
 import { serializeAsJson } from "./json-serializer";
 import { normalizeTestName } from "./normalizers";
 import { serializeAsText } from "./text-serializer";
-import { SerializerResult } from "./types";
+import type { SerializerResult } from "./types";
 import { bannerValue, mkdir, readFile, writeFile } from "./utils";
 
 export interface MatchValidationFileOptions {
@@ -73,7 +73,7 @@ export function toMatchValidationFile(
 
   return {
     pass: equals(storedActual, storedValidation, [], true),
-    message: () => "Actual value does not match validation file.",
+    message: (): string => "Actual value does not match validation file.",
     actual: storedActual,
     expected: storedValidation,
   };

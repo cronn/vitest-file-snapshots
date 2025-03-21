@@ -1,5 +1,5 @@
 import { isArray, isPlainObject } from "./guards";
-import { SerializerResult } from "./types";
+import type { SerializerResult } from "./types";
 
 type JsonValue =
   | Record<string, unknown>
@@ -94,7 +94,7 @@ function normalizeNumber(value: number): JsonValue {
     return normalizedValue("number", { value: "NaN" });
   }
 
-  if (value === Infinity) {
+  if (value === Number.POSITIVE_INFINITY) {
     return normalizedValue("number", { value: "Infinity" });
   }
 
@@ -173,7 +173,7 @@ function normalizeMap(value: Map<unknown, unknown>): Record<string, unknown> {
 function normalizedValue(
   type: string,
   additionalProps: Partial<Record<string, JsonValue>> = {},
-) {
+): JsonValue {
   return { $type: type, ...additionalProps };
 }
 
