@@ -77,6 +77,11 @@ describe("creates directory for describe block", () => {
   });
 });
 
+test("appends suffix to file name", () => {
+  expect.soft("value1").toMatchValidationFile({ suffix: "value1"});
+  expect.soft("value2").toMatchValidationFile({ suffix: "value2"});
+});
+
 test("when matcher is inverted, throws error", () => {
   expect(() => expect("value").not.toMatchValidationFile());
 });
