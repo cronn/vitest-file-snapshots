@@ -2,10 +2,7 @@
   "name": "@cronn/vitest-file-snapshots",
   "version": "0.0.1",
   "description": "Wriote tests with Vitest using file snapshots",
-  "keywords": [
-    "vitest",
-    "file snapshots"
-  ],
+  "keywords": ["vitest", "file snapshots"],
   "bugs": {
     "url": "https://github.com/cronn/vitest-file-snapshots/issues"
   },
@@ -21,20 +18,16 @@
     "pnpm": ">=10"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild"
-    ]
+    "ignoredBuiltDependencies": ["esbuild"]
   },
   "scripts": {
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "lint": "eslint --max-warnings=0 src/**/*",
-    "lint:fix": "eslint --fix src/**/*",
+    "check": "biome check .",
+    "fix": "biome check --write .",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "compile": "tsc",
     "build": "tsup",
-    "ci": "pnpm run format:check && pnpm run compile && pnpm run lint && pnpm run test"
+    "ci": "biome ci . && pnpm run compile & pnpm run test"
   },
   "type": "module",
   "exports": {
@@ -44,25 +37,15 @@
       "import": "./dist/extend-expect.js"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@changesets/cli": "2.28.1",
-    "@eslint/compat": "1.2.7",
-    "@eslint/eslintrc": "3.3.0",
-    "@trivago/prettier-plugin-sort-imports": "5.2.2",
     "@types/node": "22.13.10",
     "@vitest/coverage-istanbul": "3.0.9",
     "@vitest/expect": "3.0.9",
-    "eslint": "9.22.0",
-    "eslint-config-prettier": "10.1.1",
-    "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-unused-imports": "4.1.4",
-    "prettier": "3.5.3",
     "tsup": "8.4.0",
-    "typescript": "5.8.2",
-    "typescript-eslint": "8.27.0"
+    "typescript": "5.8.2"
   },
   "peerDependencies": {
     "vitest": "^3"

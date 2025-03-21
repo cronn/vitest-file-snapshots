@@ -3,7 +3,7 @@ export function isArray(value: unknown): value is unknown[] {
 }
 
 export function isObject(value: unknown): value is object {
-  return typeof value == "object" && value !== null && !isArray(value);
+  return typeof value === "object" && value !== null && !isArray(value);
 }
 
 export function isPlainObject(

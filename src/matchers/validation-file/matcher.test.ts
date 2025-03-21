@@ -35,21 +35,21 @@ test("validates array", () => {
 });
 
 test("validates atomic values", () => {
-  [
+  for (const { name, value } of [
     { name: "null", value: null },
     { name: "undefined", value: undefined },
     { name: "boolean", value: true },
     { name: "number", value: 4711 },
     { name: "string", value: "first line\nsecond line" },
-  ].forEach(({ name, value }) => {
+  ]) {
     expect.soft(value).toMatchValidationFile({ suffix: name });
-  });
+  }
 });
 
 test("validates JS values", () => {
   expect({
     undefinedValue: undefined,
-    infinityValue: Infinity,
+    infinityValue: Number.POSITIVE_INFINITY,
     nanValue: Number.NaN,
     setValue: new Set(["item1", "item2"]),
     mapValue: new Map([
@@ -57,7 +57,7 @@ test("validates JS values", () => {
       ["key2", "item2"],
     ]),
     promiseValue: Promise.resolve("async value"),
-    functionValue: () => {
+    functionValue: function functionName(): string {
       return "value";
     },
     dateValue: new Date("2000-01-01T12:34:56Z"),

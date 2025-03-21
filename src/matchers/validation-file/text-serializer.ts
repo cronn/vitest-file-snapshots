@@ -1,4 +1,4 @@
-import { SerializerResult } from "./types";
+import type { SerializerResult } from "./types";
 
 export function serializeAsText(value: unknown): SerializerResult {
   return {
