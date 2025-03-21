@@ -14,7 +14,9 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "compile:types": "tsc",
-    "compile:bundle": "tsup"
+    "compile:lib": "tsup",
+    "check": "pnpm format:check && pnpm lint && test",
+    "build": "pnpm compile:types && pnpm compile:lib"
   },
   "exports": {
     "./extend-expect": {
