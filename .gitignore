@@ -7,3 +7,6 @@
 # output
 /lib
 /types
+
+# validation files
+/data/test/output
