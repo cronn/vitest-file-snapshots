@@ -1,4 +1,7 @@
-import { MatchValidationFileOptions, toMatchValidationFile } from "./validation-file/matcher";
+import {
+  MatchValidationFileOptions,
+  toMatchValidationFile,
+} from "./validation-file/matcher";
 
 export { toMatchValidationFile };
 

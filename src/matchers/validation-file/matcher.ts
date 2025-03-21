@@ -2,17 +2,17 @@ import { ExpectationResult, MatcherState } from "@vitest/expect";
 import * as fs from "fs";
 import * as path from "path";
 import "vitest";
-import { normalizeTestName } from "./normalizers";
-import { SerializerResult } from "./types";
-import { serializeAsJson } from "./json-serializer";
-import { serializeAsText } from "./text-serializer";
-import { bannerValue, mkdir, readFile, writeFile } from "./utils";
+
 import {
   OUTPUT_FOLDER,
   TEST_PATH_SEPARATOR,
   VALIDATION_FOLDER,
 } from "./config";
-import { isArray, isObject } from "./guards";
+import { serializeAsJson } from "./json-serializer";
+import { normalizeTestName } from "./normalizers";
+import { serializeAsText } from "./text-serializer";
+import { SerializerResult } from "./types";
+import { bannerValue, mkdir, readFile, writeFile } from "./utils";
 
 export interface MatchValidationFileOptions {
   suffix?: string;
@@ -83,9 +83,9 @@ function serializeValue(
   value: unknown,
   includeUndefinedObjectProperties = false,
 ): SerializerResult {
-  if (isArray(value) || isObject(value)) {
-    return serializeAsJson(value, { includeUndefinedObjectProperties });
+  if (typeof value === "string") {
+    return serializeAsText(value);
   }
 
-  return serializeAsText(value);
+  return serializeAsJson(value, { includeUndefinedObjectProperties });
 }

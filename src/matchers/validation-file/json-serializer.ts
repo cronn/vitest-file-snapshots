@@ -1,4 +1,4 @@
-import { isArray, isObject } from "./guards";
+import { isArray, isPlainObject } from "./guards";
 import { SerializerResult } from "./types";
 
 type JsonValue =
@@ -17,19 +17,39 @@ export function serializeAsJson(
   value: unknown,
   options: JsonSerializerOptions,
 ): SerializerResult {
-  if (!isObject(value)) {
-    throw new Error(
-      `Value of type ${typeof value} cannot be serialized as JSON.`,
-    );
-  }
-
-  const jsonValue = normalizeValue(value, options);
+  const jsonValue =
+    isPlainObject(value) || isArray(value)
+      ? normalizeValueRecursive(value, options)
+      : normalizeValue(value, options);
   const serializedValue = JSON.stringify(jsonValue, undefined, 2);
 
   return {
     value: serializedValue,
     fileExtension: "json",
   };
+}
+
+function normalizeValueRecursive(
+  value: unknown,
+  options: JsonSerializerOptions,
+): JsonValue {
+  if (isArray(value)) {
+    return normalizeArray(value, options);
+  }
+
+  if (isPlainObject(value)) {
+    return normalizePlainObject(value, options);
+  }
+
+  if (
+    typeof value === "string" ||
+    typeof value === "boolean" ||
+    value === null
+  ) {
+    return value;
+  }
+
+  return normalizeValue(value, options);
 }
 
 function normalizeValue(
@@ -40,75 +60,88 @@ function normalizeValue(
     return normalizedValue("undefined");
   }
 
-  if (Number.isNaN(value)) {
-    return normalizedValue("number", "NaN");
+  if (
+    value === null ||
+    typeof value === "string" ||
+    typeof value === "boolean"
+  ) {
+    return normalizedValue(typeof value, { value });
   }
 
-  if (value === Infinity) {
-    return normalizedValue("number", "Infinity");
+  if (typeof value === "number") {
+    return normalizeNumber(value);
   }
 
   if (typeof value === "symbol") {
-    return normalizedValue("Symbol", value.description);
-  }
-
-  if (value instanceof Date) {
-    return normalizedValue("Date", value.toISOString());
-  }
-
-  if (value instanceof Promise) {
-    return normalizedValue("Promise");
+    return normalizedValue("symbol", { description: value.description });
   }
 
   if (typeof value === "function") {
-    return normalizedValue("Function");
+    return normalizedValue("function", { name: value.name });
   }
 
-  if (
-    typeof value === "string" ||
-    typeof value === "boolean" ||
-    typeof value === "number" ||
-    value === null
-  ) {
-    return value;
-  }
-
-  if (isArray(value)) {
-    return normalizeArray(value, options);
-  }
-
-  if (isObject(value)) {
+  if (typeof value === "object") {
     return normalizeObject(value, options);
   }
 
   throw new Error(
-    `Value of type ${typeof value} cannot be normalized to JSON.`,
+    `Missing JSON normalization for value of type ${typeof value}.`,
   );
+}
+
+function normalizeNumber(value: number): JsonValue {
+  if (Number.isNaN(value)) {
+    return normalizedValue("number", { value: "NaN" });
+  }
+
+  if (value === Infinity) {
+    return normalizedValue("number", { value: "Infinity" });
+  }
+
+  return value;
 }
 
 function normalizeArray(
   value: unknown[],
   options: JsonSerializerOptions,
 ): JsonValue {
-  return value.map((item) => normalizeValue(item, options));
+  return value.map((item) => normalizeValueRecursive(item, options));
 }
 
 function normalizeObject(
   value: object,
   options: JsonSerializerOptions,
 ): JsonValue {
+  if (value instanceof Date) {
+    return normalizedValue("Date", { value: value.toISOString() });
+  }
+
+  if (value instanceof Promise) {
+    return normalizedValue("Promise");
+  }
+
   if (value instanceof Set) {
-    return normalizedValue(
-      "Set",
-      normalizeArray(Array.from(value.values()), options),
-    );
+    return normalizedValue("Set", {
+      values: normalizeArray(Array.from(value.values()), options),
+    });
   }
 
   if (value instanceof Map) {
     const mapAsObject = normalizeMap(value);
-    return normalizedValue("Map", normalizeObject(mapAsObject, options));
+    return normalizedValue("Map", {
+      value: normalizePlainObject(mapAsObject, options),
+    });
   }
 
+  throw new Error(
+    `Missing JSON normalization for object of type ${Object.getPrototypeOf(value)}`,
+  );
+}
+
+function normalizePlainObject(
+  value: object,
+  options: JsonSerializerOptions,
+): JsonValue {
   const normalizedObject: Record<string, unknown> = {};
 
   for (const [key, propertyValue] of Object.entries(value)) {
@@ -120,7 +153,7 @@ function normalizeObject(
     }
 
     assertKeyType(key);
-    normalizedObject[key] = normalizeValue(propertyValue, options);
+    normalizedObject[key] = normalizeValueRecursive(propertyValue, options);
   }
 
   return normalizedObject;
@@ -137,8 +170,11 @@ function normalizeMap(value: Map<unknown, unknown>): Record<string, unknown> {
   );
 }
 
-function normalizedValue(type: string, value?: JsonValue) {
-  return { $type: type, value };
+function normalizedValue(
+  type: string,
+  additionalProps: Partial<Record<string, JsonValue>> = {},
+) {
+  return { $type: type, ...additionalProps };
 }
 
 function assertKeyType(key: unknown): asserts key is string {

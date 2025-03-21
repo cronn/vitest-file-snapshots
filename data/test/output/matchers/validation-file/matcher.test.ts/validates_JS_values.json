@@ -9,7 +9,7 @@
   },
   "setValue": {
     "$type": "Set",
-    "value": [
+    "values": [
       "item1",
       "item2"
     ]
@@ -25,14 +25,15 @@
     "$type": "Promise"
   },
   "functionValue": {
-    "$type": "Function"
+    "$type": "function",
+    "name": "functionValue"
   },
   "dateValue": {
     "$type": "Date",
     "value": "2000-01-01T12:34:56.000Z"
   },
   "symbolValue": {
-    "$type": "Symbol",
-    "value": "description"
+    "$type": "symbol",
+    "description": "description"
   }
 }
