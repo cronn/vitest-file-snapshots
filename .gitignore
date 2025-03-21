@@ -6,8 +6,7 @@
 /node_modules
 
 # output
-/lib
-/types
+/dist
 
 # validation files
 /data/test/output

@@ -7,13 +7,11 @@
     "noImplicitOverride": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "incremental": true,
     "outDir": "./types",
     "lib": ["esnext"],
     "moduleResolution": "bundler",
     "skipLibCheck": true,
-    "declaration": true,
-    "emitDeclarationOnly": true
+    "noEmit": true
   },
   "include": [
     "vitest.config.ts",
