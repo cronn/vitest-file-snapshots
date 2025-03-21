@@ -1,13 +1,11 @@
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginImport from "eslint-plugin-import";
-import pluginPromise from "eslint-plugin-promise";
 import eslintPluginUnusedImports from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
-  pluginPromise.configs["flat/recommended"],
   eslintConfigPrettier,
   {
     plugins: {
