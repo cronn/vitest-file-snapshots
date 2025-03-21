@@ -1,9 +1,6 @@
 name: CI Pipeline
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -35,40 +32,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Check formatting
-        run: pnpm format:check
-
-      - name: Lint code
-        run: pnpm lint
-
-      - name: Run tests with coverage
-        run: pnpm test:coverage
-
-  build:
-    name: Build Project
-    needs: validate
-    runs-on: ubuntu-22.04
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Compile TypeScript types
-        run: pnpm compile:types
-
-      - name: Compile library
-        run: pnpm compile:lib
+      - name: Run CI
+        run: pnpm run ci
