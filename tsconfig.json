@@ -4,16 +4,15 @@
     "strict": true,
     "erasableSyntaxOnly": true,
     "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
     "esModuleInterop": true,
-    "module": "esnext",
     "isolatedModules": true,
     "incremental": true,
     "outDir": "./types",
     "lib": ["esnext"],
     "moduleResolution": "bundler",
-    "declaration": true,
-    "declarationMap": true,
     "skipLibCheck": true,
+    "declaration": true,
     "emitDeclarationOnly": true
   },
   "include": [
