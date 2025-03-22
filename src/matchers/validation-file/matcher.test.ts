@@ -46,11 +46,16 @@ test("validates atomic values", () => {
   }
 });
 
-test("validates JS values", () => {
+test("validates JS-specific values", () => {
   expect({
     undefinedValue: undefined,
-    infinityValue: Number.POSITIVE_INFINITY,
     nanValue: Number.NaN,
+    minNumberValue: Number.MIN_VALUE,
+    maxNumberValue: Number.MAX_VALUE,
+    minSafeIntegerValue: Number.MIN_SAFE_INTEGER,
+    maxSafeIntegerValue: Number.MAX_SAFE_INTEGER,
+    positiveInfinityValue: Number.POSITIVE_INFINITY,
+    negativeInfinityValue: Number.NEGATIVE_INFINITY,
     setValue: new Set(["item1", "item2"]),
     mapValue: new Map([
       ["key1", "item1"],
@@ -60,7 +65,11 @@ test("validates JS values", () => {
     functionValue: function functionName(): string {
       return "value";
     },
+    arrowFunctionValue: (): string => {
+      return "value";
+    },
     dateValue: new Date("2000-01-01T12:34:56Z"),
+    invalidDateValue: new Date("invalid"),
     symbolValue: Symbol("description"),
   }).toMatchValidationFile();
 });
