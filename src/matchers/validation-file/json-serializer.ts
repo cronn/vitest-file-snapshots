@@ -72,6 +72,10 @@ function normalizeValue(
     return normalizeNumber(value);
   }
 
+  if (typeof value === "bigint") {
+    return normalizedValue("bigint", { value: value.toString() });
+  }
+
   if (typeof value === "symbol") {
     return normalizedValue("symbol", { description: value.description });
   }
@@ -151,7 +155,7 @@ function normalizeObject(
 
 function normalizeDate(value: Date): JsonValue {
   if (Number.isNaN(value.getTime())) {
-    return normalizedValue("Date", { value: "Invalid date"});
+    return normalizedValue("Date", { value: "Invalid date" });
   }
 
   return normalizedValue("Date", { value: value.toISOString() });
