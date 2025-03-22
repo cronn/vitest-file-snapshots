@@ -91,14 +91,25 @@ function normalizeValue(
 
 function normalizeNumber(value: number): JsonValue {
   if (Number.isNaN(value)) {
-    return normalizedValue("number", { value: "NaN" });
+    return normalizedValue("number", { value: "Number.NaN" });
   }
 
-  if (value === Number.POSITIVE_INFINITY) {
-    return normalizedValue("number", { value: "Infinity" });
+  switch (value) {
+    case Number.MIN_VALUE:
+      return normalizedValue("number", { value: "Number.MIN_VALUE" });
+    case Number.MAX_VALUE:
+      return normalizedValue("number", { value: "Number.MAX_VALUE" });
+    case Number.MIN_SAFE_INTEGER:
+      return normalizedValue("number", { value: "Number.MIN_SAFE_INTEGER" });
+    case Number.MAX_SAFE_INTEGER:
+      return normalizedValue("number", { value: "Number.MAX_SAFE_INTEGER" });
+    case Number.NEGATIVE_INFINITY:
+      return normalizedValue("number", { value: "Number.NEGATIVE_INFINITY" });
+    case Number.POSITIVE_INFINITY:
+      return normalizedValue("number", { value: "Number.POSITIVE_INFINITY" });
+    default:
+      return value;
   }
-
-  return value;
 }
 
 function normalizeArray(
@@ -113,7 +124,7 @@ function normalizeObject(
   options: JsonSerializerOptions,
 ): JsonValue {
   if (value instanceof Date) {
-    return normalizedValue("Date", { value: value.toISOString() });
+    return normalizeDate(value);
   }
 
   if (value instanceof Promise) {
@@ -129,13 +140,21 @@ function normalizeObject(
   if (value instanceof Map) {
     const mapAsObject = normalizeMap(value);
     return normalizedValue("Map", {
-      value: normalizePlainObject(mapAsObject, options),
+      values: normalizePlainObject(mapAsObject, options),
     });
   }
 
   throw new Error(
     `Missing JSON normalization for object of type ${Object.getPrototypeOf(value)}`,
   );
+}
+
+function normalizeDate(value: Date): JsonValue {
+  if (Number.isNaN(value.getTime())) {
+    return normalizedValue("Date", { value: "Invalid date"});
+  }
+
+  return normalizedValue("Date", { value: value.toISOString() });
 }
 
 function normalizePlainObject(
