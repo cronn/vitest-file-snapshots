@@ -56,6 +56,7 @@ test("validates JS-specific values", () => {
     maxSafeIntegerValue: Number.MAX_SAFE_INTEGER,
     positiveInfinityValue: Number.POSITIVE_INFINITY,
     negativeInfinityValue: Number.NEGATIVE_INFINITY,
+    bigintValue: BigInt(1),
     setValue: new Set(["item1", "item2"]),
     mapValue: new Map([
       ["key1", "item1"],

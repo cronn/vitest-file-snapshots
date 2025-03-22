@@ -27,6 +27,10 @@
     "$type": "number",
     "value": "Number.NEGATIVE_INFINITY"
   },
+  "bigintValue": {
+    "$type": "bigint",
+    "value": "1"
+  },
   "setValue": {
     "$type": "Set",
     "values": [
