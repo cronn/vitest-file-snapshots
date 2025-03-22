@@ -27,7 +27,7 @@
     "test:coverage": "vitest run --coverage",
     "compile": "tsc",
     "build": "tsup",
-    "ci": "biome ci . && pnpm run compile & pnpm run test"
+    "ci": "biome ci . && pnpm run compile & pnpm run test:coverage"
   },
   "type": "module",
   "exports": {
