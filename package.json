@@ -1,7 +1,7 @@
 {
   "name": "@cronn/vitest-file-snapshots",
   "version": "0.1.0",
-  "description": "Wriote tests with Vitest using file snapshots",
+  "description": "Write tests with Vitest using file snapshots",
   "keywords": ["vitest", "file snapshots"],
   "bugs": {
     "url": "https://github.com/cronn/vitest-file-snapshots/issues"
