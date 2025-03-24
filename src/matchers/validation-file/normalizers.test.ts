@@ -11,8 +11,10 @@ describe("normalize test name", () => {
     expect(normalizeTestName(value)).toBe("");
   });
 
-  test.each(["value", "4711"])("unwraps quoted value '%s'", (value) => {
-    expect(normalizeTestName(`'${value}'`)).toBe(value);
+  test("unwraps quoted value", () => {
+    expect(normalizeTestName(`'value with 1 number'`)).toBe(
+      "value_with_1_number",
+    );
   });
 
   test("removes plus from positive zero", () => {
