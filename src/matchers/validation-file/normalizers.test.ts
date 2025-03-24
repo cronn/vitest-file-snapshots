@@ -15,7 +15,7 @@ describe("normalize test name", () => {
     expect(normalizeTestName(`'${value}'`)).toBe(value);
   });
 
-  test("removes plus from stringified number", () => {
-    expect(normalizeTestName("'+0'")).toBe("0");
+  test("removes plus from positive zero", () => {
+    expect(normalizeTestName("+0")).toBe("0");
   });
 });
