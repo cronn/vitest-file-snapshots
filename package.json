@@ -29,6 +29,7 @@
     "build": "tsup",
     "ci": "biome ci . && pnpm run compile & pnpm run test:coverage",
     "prepublishOnly": "pnpm run ci",
+    "version": "pnpm changeset version && pnpm biome format package.json",
     "release": "pnpm run build && pnpm changeset publish"
   },
   "type": "module",
