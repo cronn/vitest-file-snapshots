@@ -22,7 +22,7 @@
   },
   "scripts": {
     "check": "biome check .",
-    "fix": "biome check --write .",
+    "check:fix": "biome check --write .",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "compile": "tsc",
