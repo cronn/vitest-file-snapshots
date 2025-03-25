@@ -26,7 +26,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "compile": "tsc",
-    "build": "tsup",
+    "build": "tsup && node ./scripts/fix-extend-expect.js",
     "ci": "biome ci . && pnpm run compile & pnpm run test:coverage",
     "prepublishOnly": "pnpm run ci",
     "version": "pnpm changeset version && pnpm biome format --write package.json",
