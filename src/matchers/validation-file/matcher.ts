@@ -41,7 +41,8 @@ export function toMatchValidationFile(
   const testNames = currentTestName
     .split(TEST_PATH_SEPARATOR)
     .map(normalizeTestName);
-  const suffix = options.suffix !== undefined ? `_${options.suffix}` : "";
+  const suffix =
+    options.suffix !== undefined ? `_${normalizeTestName(options.suffix)}` : "";
 
   const serializerResult = serializeValue(
     received,

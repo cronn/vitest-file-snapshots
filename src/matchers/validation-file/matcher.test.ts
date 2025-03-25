@@ -88,8 +88,8 @@ describe("creates directory for describe block", () => {
 });
 
 test("appends suffix to file name", () => {
-  expect.soft("value1").toMatchValidationFile({ suffix: "value1" });
-  expect.soft("value2").toMatchValidationFile({ suffix: "value2" });
+  expect.soft("value1").toMatchValidationFile({ suffix: "value 1" });
+  expect.soft("value2").toMatchValidationFile({ suffix: "value 2" });
 });
 
 test("when matcher is inverted, throws error", () => {
