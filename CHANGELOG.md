@@ -1,5 +1,12 @@
 # @cronn/vitest-file-snapshots
 
+## 0.3.0
+
+### Minor Changes
+
+- 94c5937: - Normalize file suffix
+  - Fix module augmentation in declaration file
+
 ## 0.2.0
 
 ### Minor Changes
