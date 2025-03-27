@@ -71,7 +71,7 @@ your `tsconfig.json`:
 All file snapshots are generated to `/data/tests`. The golden masters will be
 stored in `/data/test/validation`, which should be under version control. The
 file snapshots generated for test runs will be stored under
-`/data/test/validation` and should be ignored:
+`/data/test/output` and should be ignored:
 
 ```gitignore
 # file snapshots
