@@ -101,7 +101,7 @@ function mapToString(value: boolean | number): string {
 }
 
 test("maps values to string", () => {
-  test({
+  expect({
     boolean: mapToString(true),
     positiveNumber: mapToString(1),
     negativeNumber: mapToString(-1),
