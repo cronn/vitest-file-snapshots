@@ -1,5 +1,11 @@
 # @cronn/vitest-file-snapshots
 
+## 0.3.1
+
+### Patch Changes
+
+- e7975cc: Fix example in README
+
 ## 0.3.0
 
 ### Minor Changes
