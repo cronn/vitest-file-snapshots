@@ -2,6 +2,8 @@ name: CI pipeline
 
 on:
   push:
+    branches-ignore:
+      - main
 
 jobs:
   check:
