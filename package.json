@@ -2,10 +2,7 @@
   "name": "@cronn/vitest-file-snapshots",
   "version": "0.3.2",
   "description": "Write tests with Vitest using file snapshots",
-  "keywords": [
-    "vitest",
-    "file snapshots"
-  ],
+  "keywords": ["vitest", "file snapshots"],
   "bugs": {
     "url": "https://github.com/cronn/vitest-file-snapshots/issues"
   },
@@ -21,9 +18,7 @@
     "pnpm": ">=10"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild"
-    ]
+    "ignoredBuiltDependencies": ["esbuild"]
   },
   "scripts": {
     "check": "biome check .",
@@ -45,9 +40,7 @@
       "import": "./dist/extend-expect.js"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@changesets/cli": "2.28.1",
