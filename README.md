@@ -147,7 +147,7 @@ test("value is mapped", () => {
 | `suffix`                           | `undefined`   | Appends `suffix` to the generated snapshot file. Should be used whenever having multiple snapshot assertions in a single `test`. |
 | `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                                                      |
 
-## Links
+## See Also
 
 - [Validation-File Comparison Plugin for IntelliJ IDEs](https://github.com/cronn/validation-files-comparison-intellij-plugin)
 - [File Snapshots for Java](https://github.com/cronn/validation-file-assertions)
