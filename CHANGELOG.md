@@ -1,5 +1,11 @@
 # @cronn/vitest-file-snapshots
 
+## 0.3.2
+
+### Patch Changes
+
+- 8152882: Fix path in README
+
 ## 0.3.1
 
 ### Patch Changes
