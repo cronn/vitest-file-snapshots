@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig((options) => ({
-  entry: ["src/extend-expect.ts"],
+  entry: ["src/matcher.ts"],
   platform: "node",
   format: ["esm"],
   dts: true,

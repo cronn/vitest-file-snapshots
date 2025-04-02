@@ -10,6 +10,7 @@
 
 # validation files
 /data/test/output
+/custom-data/output
 
 # unit tests
 /coverage
