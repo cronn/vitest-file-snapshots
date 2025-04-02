@@ -3,28 +3,49 @@ import * as path from "node:path";
 import type { ExpectationResult, MatcherState } from "@vitest/expect";
 import "vitest";
 
-import {
-  OUTPUT_FOLDER,
-  TEST_PATH_SEPARATOR,
-  VALIDATION_FOLDER,
-} from "./config";
+import { expect } from "vitest";
+import { DEFAULT_VALIDATION_FILE_OPTIONS, TEST_PATH_SEPARATOR } from "./config";
 import { serializeAsJson } from "./json-serializer";
 import { normalizeTestName } from "./normalizers";
 import { serializeAsText } from "./text-serializer";
-import type { SerializerResult } from "./types";
+import type {
+  SerializerResult,
+  ValidationFileMatcherOptions,
+  ValidationFileOptions,
+} from "./types";
 import { bannerValue, mkdir, readFile, writeFile } from "./utils";
 
-export interface MatchValidationFileOptions {
-  suffix?: string;
-  includeUndefinedObjectProperties?: boolean;
+export function registerValidationFileMatcher(
+  validationFileOptions: ValidationFileOptions = {},
+): void {
+  function toMatchValidationFile(
+    this: MatcherState,
+    received: unknown,
+    matcherOptions: ValidationFileMatcherOptions = {},
+  ): ExpectationResult {
+    const mergedOptions: MatchValidationFileOptions = {
+      ...DEFAULT_VALIDATION_FILE_OPTIONS,
+      ...validationFileOptions,
+      ...matcherOptions,
+    };
+
+    return matchValidationFile(received, mergedOptions, this);
+  }
+
+  expect.extend({
+    toMatchValidationFile,
+  });
 }
 
-export function toMatchValidationFile(
-  this: MatcherState,
+type MatchValidationFileOptions = Required<ValidationFileOptions> &
+  ValidationFileMatcherOptions;
+
+function matchValidationFile(
   received: unknown,
-  options: MatchValidationFileOptions = {},
+  options: MatchValidationFileOptions,
+  matcherState: MatcherState,
 ): ExpectationResult {
-  const { currentTestName, testPath, equals, isNot } = this;
+  const { currentTestName, testPath, equals, isNot } = matcherState;
 
   if (currentTestName === undefined) {
     throw new Error("Missing test name");
@@ -52,17 +73,20 @@ export function toMatchValidationFile(
 
   const testName = testNames.pop();
   const absoluteTestNamePath = path.join(testPath, ...testNames);
-  const relativeTestNamePath = path.relative("src", absoluteTestNamePath);
+  const relativeTestNamePath = path.relative(
+    options.baseDir,
+    absoluteTestNamePath,
+  );
   const fileName = `${testName}${suffix}.${serializerResult.fileExtension}`;
 
-  const outputFolder = `${OUTPUT_FOLDER}/${relativeTestNamePath}`;
-  const actualFile = `${outputFolder}/${fileName}`;
+  const testOutputDir = `${options.outputDir}/${relativeTestNamePath}`;
+  const actualFile = `${testOutputDir}/${fileName}`;
 
-  const validationFolder = `${VALIDATION_FOLDER}/${relativeTestNamePath}`;
-  const validationFile = `${validationFolder}/${fileName}`;
+  const testValidationDir = `${options.validationDir}/${relativeTestNamePath}`;
+  const validationFile = `${testValidationDir}/${fileName}`;
 
-  mkdir(outputFolder);
-  mkdir(validationFolder);
+  mkdir(testOutputDir);
+  mkdir(testValidationDir);
 
   if (!fs.existsSync(validationFile)) {
     writeFile(validationFile, `${bannerValue("missing file")}\n${actual}`);

@@ -41,7 +41,9 @@ pnpm add -D @cronn/vitest-file-snapshots
 Import the Custom Matcher in your `vitest-setup.ts`:
 
 ```ts
-import "@cronn/vitest-file-snapshots/extend-expect";
+import { registerValidationFileMatcher } from "@cronn/vitest-file-snapshots/matcher";
+
+registerValidationFileMatcher();
 ```
 
 If you don't have a setup file in your project, you need to create it and add it
@@ -140,7 +142,34 @@ test("value is mapped", () => {
 // }
 ```
 
-## Snapshot Options
+## Configuration
+
+### Matcher Options
+
+Matcher options can be passed when registering the matcher in the setup file:
+
+ ```ts
+registerValidationFileMatcher({
+  baseDir: "src"
+});
+```
+
+| Option          | Default Value          | Description                                                                               |
+|-----------------|------------------------|-------------------------------------------------------------------------------------------|
+| `baseDir`       | `.`                    | Base directory for tests. The paths of snapshot files will be relative to this directory. |
+| `validationDir` | `data/test/validation` | Directory in which golden masters are stored.                                             |
+| `outputDir`     | `data/test/output`     | Directory in which file snapshots from test runs are stored.                              |
+
+
+### Snapshot Options
+
+Snapshot options can be passed whenever calling the validation file matcher:
+
+ ```ts
+expect(value).toMatchValidationFile({
+  includeUndefinedObjectProperties: true
+});
+```
 
 | Option                             | Default Value | Description                                                                                                                      |
 |------------------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------|
