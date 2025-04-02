@@ -1,4 +1,4 @@
-import type { ValidationFileMatchers } from "./matchers/validation-file/types";
+import type { ValidationFileMatchers } from "./validation-file-matcher/types";
 
 declare module "vitest" {
   // biome-ignore lint/suspicious/noExplicitAny: needs to use same type as extended interface
@@ -6,4 +6,4 @@ declare module "vitest" {
   interface AsymmetricMatchersContaining extends ValidationFileMatchers {}
 }
 
-export { registerValidationFileMatcher } from "./matchers/validation-file/matcher";
+export { registerValidationFileMatcher } from "./validation-file-matcher/matcher";
