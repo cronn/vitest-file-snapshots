@@ -26,7 +26,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "compile": "tsc",
-    "build": "tsup && node ./scripts/fix-extend-expect.js",
+    "build": "tsup && node scripts/fix-declaration-file.js",
     "ci": "biome ci . && pnpm run compile & pnpm run test:coverage",
     "prepublishOnly": "pnpm run ci",
     "version": "pnpm changeset version && pnpm biome format --write package.json",
@@ -35,9 +35,9 @@
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
-    "./extend-expect": {
-      "types": "./dist/extend-expect.d.ts",
-      "import": "./dist/extend-expect.js"
+    "./matcher": {
+      "types": "./dist/matcher.d.ts",
+      "import": "./dist/matcher.js"
     }
   },
   "files": ["dist"],
