@@ -1,8 +1,11 @@
 {
   "name": "@cronn/vitest-file-snapshots",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Write tests with Vitest using file snapshots",
-  "keywords": ["vitest", "file snapshots"],
+  "keywords": [
+    "vitest",
+    "file snapshots"
+  ],
   "bugs": {
     "url": "https://github.com/cronn/vitest-file-snapshots/issues"
   },
@@ -18,7 +21,9 @@
     "pnpm": ">=10"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": ["esbuild"]
+    "ignoredBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "scripts": {
     "check": "biome check .",
@@ -40,7 +45,9 @@
       "import": "./dist/matcher.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@changesets/cli": "2.29.3",

@@ -1,5 +1,11 @@
 # @cronn/vitest-file-snapshots
 
+## 0.4.1
+
+### Patch Changes
+
+- f9541a3: Update dependencies
+
 ## 0.4.0
 
 ### Minor Changes
