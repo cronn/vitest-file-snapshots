@@ -43,12 +43,12 @@
   "files": ["dist"],
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "2.28.1",
-    "@types/node": "22.13.10",
-    "@vitest/coverage-istanbul": "3.0.9",
-    "@vitest/expect": "3.0.9",
+    "@changesets/cli": "2.29.3",
+    "@types/node": "22.15.3",
+    "@vitest/coverage-istanbul": "3.1.2",
+    "@vitest/expect": "3.1.2",
     "tsup": "8.4.0",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "peerDependencies": {
     "vitest": "^3"
