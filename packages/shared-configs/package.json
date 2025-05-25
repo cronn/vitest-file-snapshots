@@ -1,0 +1,42 @@
+{
+  "name": "@cronn/shared-configs",
+  "version": "0.0.0",
+  "description": "Internal shared configs for the monorepo",
+  "author": "cronn",
+  "private": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cronn/vitest-file-snapshots.git",
+    "directory": "packages/shared-configs"
+  },
+  "homepage": "https://github.com/cronn/vitest-file-snapshots",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "compile": "tsc",
+    "build": "tsup",
+    "ci": "biome ci . && pnpm run compile && pnpm run build"
+  },
+  "type": "module",
+  "exports": {
+    "./tsup": {
+      "types": "./dist/tsup.d.ts",
+      "default": "./dist/tsup.js"
+    },
+    "./vitest": {
+      "types": "./dist/vitest.d.ts",
+      "default": "./dist/vitest.js"
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

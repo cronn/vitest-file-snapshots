@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "target": "ESNext",
     "strict": true,
@@ -8,9 +7,11 @@
     "noImplicitOverride": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "outDir": "./types",
     "lib": ["esnext"],
     "moduleResolution": "bundler",
     "skipLibCheck": true,
     "noEmit": true
-  }
+  },
+  "include": ["tsup.config.ts", "vitest.config.ts", "./src/**/*.ts"]
 }

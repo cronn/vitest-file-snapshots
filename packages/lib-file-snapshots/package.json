@@ -1,0 +1,48 @@
+{
+  "name": "@cronn/lib-file-snapshots",
+  "version": "0.0.0",
+  "description": "The library agnostic core for testing file snapshots",
+  "keywords": ["file snapshots"],
+  "bugs": {
+    "url": "https://github.com/cronn/vitest-file-snapshots/issues"
+  },
+  "author": "cronn",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cronn/vitest-file-snapshots.git",
+    "directory": "packages/lib-file-snapshots"
+  },
+  "homepage": "https://github.com/cronn/vitest-file-snapshots",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "compile": "tsc",
+    "build": "tsup",
+    "ci": "biome ci . && pnpm run compile & pnpm run test:coverage && pnpm run build"
+  },
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@cronn/shared-configs": "workspace:*",
+    "@types/node": "catalog:",
+    "@vitest/coverage-istanbul": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
