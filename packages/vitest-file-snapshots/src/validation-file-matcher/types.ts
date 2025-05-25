@@ -41,8 +41,3 @@ export interface ValidationFileOptions {
    */
   outputDir?: string;
 }
-
-export interface SerializerResult {
-  value: string;
-  fileExtension: string;
-}

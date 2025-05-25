@@ -3,14 +3,10 @@
 *.iml
 
 # dependencies
-/node_modules
+node_modules
 
 # output
-/dist
-
-# validation files
-/data/test/output
-/custom-data/output
+dist
 
 # unit tests
-/coverage
+coverage

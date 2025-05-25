@@ -3,13 +3,15 @@ import * as path from "node:path";
 import type { ExpectationResult, MatcherState } from "@vitest/expect";
 import "vitest";
 
+import {
+  type SerializerResult,
+  normalizeTestName,
+  serializeAsJson,
+  serializeAsText,
+} from "@cronn/lib-file-snapshots";
 import { expect } from "vitest";
 import { DEFAULT_VALIDATION_FILE_OPTIONS, TEST_PATH_SEPARATOR } from "./config";
-import { serializeAsJson } from "./json-serializer";
-import { normalizeTestName } from "./normalizers";
-import { serializeAsText } from "./text-serializer";
 import type {
-  SerializerResult,
   ValidationFileMatcherOptions,
   ValidationFileOptions,
 } from "./types";
