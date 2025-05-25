@@ -47,7 +47,8 @@
     "@vitest/coverage-istanbul": "catalog:",
     "@vitest/expect": "catalog:",
     "tsup": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "vitest": "^3"
