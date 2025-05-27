@@ -4,7 +4,7 @@ on:
   push:
     branches-ignore:
       - main
-      - changeset-release/main
+  workflow_dispatch:
 
 jobs:
   check:
