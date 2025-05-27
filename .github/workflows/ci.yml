@@ -9,7 +9,7 @@ on:
 jobs:
   check:
     name: Run CI checks
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
@@ -18,12 +18,12 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.6.5
+          version: 10.11.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.14.0
+          node-version: 22.16.0
           cache: "pnpm"
 
       - name: Install dependencies
