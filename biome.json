@@ -7,7 +7,14 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["data/test", "dist"]
+    "ignore": [
+      "**/data/test",
+      "**/custom-data",
+      "**/dist",
+      "**/.tmp",
+      "**/__snapshots__",
+      "**/coverage"
+    ]
   },
   "formatter": {
     "enabled": true,

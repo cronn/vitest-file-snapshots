@@ -1,50 +1,40 @@
-import * as fs from "node:fs";
-import * as path from "node:path";
 import type { ExpectationResult, MatcherState } from "@vitest/expect";
 import "vitest";
 
 import {
-  type SerializerResult,
-  normalizeTestName,
-  serializeAsJson,
-  serializeAsText,
+  CompositeSerializer,
+  JsonSerializer,
+  TextSerializer,
+  ValidationFileMatcher,
 } from "@cronn/lib-file-snapshots";
 import { expect } from "vitest";
-import { DEFAULT_VALIDATION_FILE_OPTIONS, TEST_PATH_SEPARATOR } from "./config";
 import type {
-  ValidationFileMatcherOptions,
-  ValidationFileOptions,
+  VitestMatchValidationFileOptions,
+  VitestValidationFileMatcherConfig,
+  VitestValidationFileMatchers,
 } from "./types";
-import { bannerValue, mkdir, readFile, writeFile } from "./utils";
+import { parseTestName } from "./utils";
 
 export function registerValidationFileMatcher(
-  validationFileOptions: ValidationFileOptions = {},
+  config: VitestValidationFileMatcherConfig = {},
 ): void {
   function toMatchValidationFile(
     this: MatcherState,
     received: unknown,
-    matcherOptions: ValidationFileMatcherOptions = {},
+    options: VitestMatchValidationFileOptions = {},
   ): ExpectationResult {
-    const mergedOptions: MatchValidationFileOptions = {
-      ...DEFAULT_VALIDATION_FILE_OPTIONS,
-      ...validationFileOptions,
-      ...matcherOptions,
-    };
-
-    return matchValidationFile(received, mergedOptions, this);
+    return matchValidationFile(received, config, options, this);
   }
 
   expect.extend({
     toMatchValidationFile,
-  });
+  } satisfies VitestValidationFileMatchers);
 }
-
-type MatchValidationFileOptions = Required<ValidationFileOptions> &
-  ValidationFileMatcherOptions;
 
 function matchValidationFile(
   received: unknown,
-  options: MatchValidationFileOptions,
+  config: VitestValidationFileMatcherConfig,
+  options: VitestMatchValidationFileOptions,
   matcherState: MatcherState,
 ): ExpectationResult {
   const { currentTestName, testPath, equals, isNot } = matcherState;
@@ -61,58 +51,27 @@ function matchValidationFile(
     throw new Error("Matcher negation is not supported");
   }
 
-  const testNames = currentTestName
-    .split(TEST_PATH_SEPARATOR)
-    .map(normalizeTestName);
-  const suffix =
-    options.suffix !== undefined ? `_${normalizeTestName(options.suffix)}` : "";
-
-  const serializerResult = serializeValue(
+  const matcherResult = new ValidationFileMatcher(config).matchFileSnapshot(
     received,
-    options.includeUndefinedObjectProperties,
+    {
+      testName: parseTestName(currentTestName),
+      testDir: testPath,
+      fileSuffix: options.suffix,
+      serializer: new CompositeSerializer([
+        new TextSerializer(),
+        new JsonSerializer({
+          includeUndefinedObjectProperties:
+            options.includeUndefinedObjectProperties,
+        }),
+      ]),
+    },
   );
-  const actual = `${serializerResult.value}\n`;
-
-  const testName = testNames.pop();
-  const absoluteTestNamePath = path.join(testPath, ...testNames);
-  const relativeTestNamePath = path.relative(
-    options.baseDir,
-    absoluteTestNamePath,
-  );
-  const fileName = `${testName}${suffix}.${serializerResult.fileExtension}`;
-
-  const testOutputDir = `${options.outputDir}/${relativeTestNamePath}`;
-  const actualFile = `${testOutputDir}/${fileName}`;
-
-  const testValidationDir = `${options.validationDir}/${relativeTestNamePath}`;
-  const validationFile = `${testValidationDir}/${fileName}`;
-
-  mkdir(testOutputDir);
-  mkdir(testValidationDir);
-
-  if (!fs.existsSync(validationFile)) {
-    writeFile(validationFile, `${bannerValue("missing file")}\n${actual}`);
-  }
-  writeFile(actualFile, actual);
-
-  const storedActual = readFile(actualFile);
-  const storedValidation = readFile(validationFile);
 
   return {
-    pass: equals(storedActual, storedValidation, [], true),
-    message: (): string => "Actual value does not match validation file.",
-    actual: storedActual,
-    expected: storedValidation,
+    pass: equals(matcherResult.actual, matcherResult.expected, [], true),
+    message: (): string =>
+      `${matcherResult.actualFile} does not match ${matcherResult.validationFile}`,
+    actual: matcherResult.actual,
+    expected: matcherResult.expected,
   };
-}
-
-function serializeValue(
-  value: unknown,
-  includeUndefinedObjectProperties = false,
-): SerializerResult {
-  if (typeof value === "string") {
-    return serializeAsText(value);
-  }
-
-  return serializeAsJson(value, { includeUndefinedObjectProperties });
 }

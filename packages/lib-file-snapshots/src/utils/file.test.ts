@@ -1,23 +1,23 @@
 import { describe, expect, test } from "vitest";
 
-import { normalizeTestName } from "./normalizers";
+import { normalizeFileName } from "./file";
 
-describe("normalize test name", () => {
+describe("normalize file name", () => {
   test.each([" ", ".", ":", "'"])("replaces '%s' by underscore", (value) => {
-    expect(normalizeTestName(value)).toBe("_");
+    expect(normalizeFileName(value)).toBe("_");
   });
 
   test.each([","])("removes '%s' from test name", (value) => {
-    expect(normalizeTestName(value)).toBe("");
+    expect(normalizeFileName(value)).toBe("");
   });
 
   test("unwraps quoted value", () => {
-    expect(normalizeTestName(`'value with 1 number'`)).toBe(
+    expect(normalizeFileName(`'value with 1 number'`)).toBe(
       "value_with_1_number",
     );
   });
 
   test("removes plus from positive zero", () => {
-    expect(normalizeTestName("+0")).toBe("0");
+    expect(normalizeFileName("+0")).toBe("0");
   });
 });

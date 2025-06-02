@@ -1,4 +1,4 @@
-export { serializeAsJson } from "./json-serializer";
-export { serializeAsText } from "./text-serializer";
-export { normalizeTestName } from "./normalizers";
-export type { SerializerResult } from "./types";
+export { CompositeSerializer } from "./serializers/composite-serializer";
+export { JsonSerializer } from "./serializers/json-serializer";
+export { TextSerializer } from "./serializers/text-serializer";
+export { ValidationFileMatcher } from "./matcher/validation-file-matcher";
