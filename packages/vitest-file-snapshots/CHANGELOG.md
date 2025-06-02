@@ -1,5 +1,15 @@
 # @cronn/vitest-file-snapshots
 
+## 0.4.2
+
+### Patch Changes
+
+- 25931bc: Update dependencies
+- 12d4a0b: Extract core library to @cronn/lib-file-snapshots
+- Updated dependencies [25931bc]
+- Updated dependencies [12d4a0b]
+  - @cronn/lib-file-snapshots@0.1.0
+
 ## 0.4.1
 
 ### Patch Changes
