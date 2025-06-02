@@ -1,8 +1,8 @@
-export interface ValidationFileMatchers<R = unknown> {
-  toMatchValidationFile: (options?: ValidationFileMatcherOptions) => R;
+export interface VitestValidationFileMatchers<R = unknown> {
+  toMatchValidationFile: (options?: VitestMatchValidationFileOptions) => R;
 }
 
-export interface ValidationFileMatcherOptions {
+export interface VitestMatchValidationFileOptions {
   /**
    * Appends `suffix` to the generated snapshot file
    *
@@ -18,7 +18,7 @@ export interface ValidationFileMatcherOptions {
   includeUndefinedObjectProperties?: boolean;
 }
 
-export interface ValidationFileOptions {
+export interface VitestValidationFileMatcherConfig {
   /**
    * Base directory for tests
    *

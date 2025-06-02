@@ -1,0 +1,13 @@
+{
+  "stringValue": "value",
+  "booleanValue": true,
+  "numberValue": 4711,
+  "nullValue": null,
+  "arrayValue": [
+    "item1",
+    "item2"
+  ],
+  "objectValue": {
+    "key": "value"
+  }
+}
