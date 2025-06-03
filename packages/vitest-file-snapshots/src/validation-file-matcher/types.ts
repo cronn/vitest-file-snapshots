@@ -4,9 +4,16 @@ export interface VitestValidationFileMatchers<R = unknown> {
 
 export interface VitestMatchValidationFileOptions {
   /**
-   * Appends `suffix` to the generated snapshot file
+   * Appends `fileSuffix` to the generated snapshot file
    *
    * Should be used whenever having multiple snapshot assertions in a single `test`.
+   */
+  fileSuffix?: string;
+
+  /**
+   * Appends `suffix` to the generated snapshot file
+   *
+   * @deprecated Use `fileSuffix` instead.
    */
   suffix?: string;
 
