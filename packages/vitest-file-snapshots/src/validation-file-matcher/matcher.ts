@@ -56,7 +56,7 @@ function matchValidationFile(
     {
       testName: parseTestName(currentTestName),
       testDir: testPath,
-      fileSuffix: options.suffix,
+      fileSuffix: options.fileSuffix ?? options.suffix,
       serializer: new CompositeSerializer([
         new TextSerializer(),
         new JsonSerializer({
