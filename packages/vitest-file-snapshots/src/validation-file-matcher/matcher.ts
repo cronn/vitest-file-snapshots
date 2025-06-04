@@ -1,5 +1,4 @@
 import type { ExpectationResult, MatcherState } from "@vitest/expect";
-import "vitest";
 
 import {
   CompositeSerializer,
