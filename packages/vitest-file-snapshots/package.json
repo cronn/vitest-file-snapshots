@@ -25,7 +25,7 @@
     "test:coverage": "vitest run --coverage",
     "compile": "tsc",
     "build": "tsup && node scripts/fix-declaration-file.js",
-    "ci": "biome ci . && pnpm run compile & pnpm run test:coverage && pnpm run build"
+    "ci": "biome ci . && pnpm run compile && pnpm run test:coverage && pnpm run build"
   },
   "type": "module",
   "exports": {
