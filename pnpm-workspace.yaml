@@ -4,7 +4,7 @@ packages:
 catalog:
   "@biomejs/biome": 1.9.4
   "@changesets/cli": 2.29.4
-  "@types/node": 22.15.21
+  "@types/node": 22.15.29
   "@vitest/coverage-istanbul": 3.1.4
   "@vitest/expect": 3.1.4
   "tsup": 8.5.0
