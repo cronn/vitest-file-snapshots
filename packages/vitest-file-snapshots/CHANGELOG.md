@@ -1,5 +1,19 @@
 # @cronn/vitest-file-snapshots
 
+## 0.5.0
+
+### Minor Changes
+
+- 6e55368: Deprecate suffix in favor of fileSuffix
+
+### Patch Changes
+
+- 4fc3c09: Generalize serializers and extract validation file matcher
+- a2a8534: chore(deps): bump @types/node from 22.15.21 to 22.15.29
+- Updated dependencies [4fc3c09]
+- Updated dependencies [a2a8534]
+  - @cronn/lib-file-snapshots@0.2.0
+
 ## 0.4.2
 
 ### Patch Changes
