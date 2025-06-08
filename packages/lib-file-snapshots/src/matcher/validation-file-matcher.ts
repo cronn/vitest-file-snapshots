@@ -15,12 +15,10 @@ import {
 } from "../utils/file";
 
 export class ValidationFileMatcher {
-  private readonly baseDir: string;
   private readonly validationDir: string;
   private readonly outputDir: string;
 
   public constructor(config: ValidationFileMatcherConfig = {}) {
-    this.baseDir = config.baseDir ?? ".";
     this.validationDir = config.validationDir ?? "data/test/validation";
     this.outputDir = config.outputDir ?? "data/test/output";
   }
@@ -58,16 +56,9 @@ export class ValidationFileMatcher {
       name !== undefined ? `_${normalizeFileName(name)}` : "";
 
     const normalizedTestName = normalizedTitlePath.pop();
-    const absoluteValidationFilePath = path.join(
-      testPath,
-      ...normalizedTitlePath,
-    );
-    const relativeValidationFilePath = path.relative(
-      this.baseDir,
-      absoluteValidationFilePath,
-    );
+    const validationFilePath = path.join(testPath, ...normalizedTitlePath);
     const validationFileName = `${normalizedTestName}${normalizedFileName}.${fileExtension}`;
-    return path.join(relativeValidationFilePath, validationFileName);
+    return path.join(validationFilePath, validationFileName);
   }
 
   private writeFileSnapshots(

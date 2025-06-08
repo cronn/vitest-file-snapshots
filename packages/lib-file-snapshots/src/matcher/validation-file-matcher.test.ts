@@ -73,23 +73,6 @@ test("when validation file exists, does not recreate validation file", async (co
   );
 });
 
-test("creates validation files relative to baseDir", async (context) => {
-  cleanTmpDir();
-
-  await snapshotMatcherResult(
-    context,
-    new ValidationFileMatcher({
-      baseDir: "./src",
-      validationDir: path.join(TMP_DIR, "validation"),
-      outputDir: path.join(TMP_DIR, "output"),
-    }).matchFileSnapshot("value", {
-      testPath: "./src/tests/feature.test.ts",
-      titlePath: ["custom baseDir"],
-      serializer: new TextSerializer(),
-    }),
-  );
-});
-
 test("appends name to validation file name", async (context) => {
   cleanTmpDir();
 

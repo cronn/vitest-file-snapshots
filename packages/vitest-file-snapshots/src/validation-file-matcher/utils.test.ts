@@ -9,6 +9,14 @@ describe("parseTestName", () => {
 
 describe("parseTestPath", () => {
   test("removes test extension from test path", () => {
-    expect(parseTestPath("src/tests/feature.test.ts")).toBe("src/tests/feature");
+    expect(parseTestPath("src/tests/feature.test.ts", ".")).toBe(
+      "src/tests/feature",
+    );
   });
-})
+
+  test("resolves test path relative to testDir", () => {
+    expect(parseTestPath("src/tests/feature.test.ts", "src/tests")).toBe(
+      "feature",
+    );
+  });
+});

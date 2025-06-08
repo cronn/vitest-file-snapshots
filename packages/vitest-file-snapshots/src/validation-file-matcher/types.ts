@@ -25,7 +25,7 @@ export interface VitestValidationFileMatcherConfig {
    * The paths of snapshot files will be relative to this directory.
    * @default "."
    */
-  baseDir?: string;
+  testDir?: string;
 
   /**
    * Directory in which golden masters are stored

@@ -150,13 +150,13 @@ Matcher options can be passed when registering the matcher in the setup file:
 
  ```ts
 registerValidationFileMatcher({
-  baseDir: "src"
+  testDir: "src"
 });
 ```
 
 | Option          | Default Value          | Description                                                                               |
 |-----------------|------------------------|-------------------------------------------------------------------------------------------|
-| `baseDir`       | `.`                    | Base directory for tests. The paths of snapshot files will be relative to this directory. |
+| `testDir`       | `.`                    | Base directory for tests. The paths of snapshot files will be relative to this directory. |
 | `validationDir` | `data/test/validation` | Directory in which golden masters are stored.                                             |
 | `outputDir`     | `data/test/output`     | Directory in which file snapshots from test runs are stored.                              |
 
