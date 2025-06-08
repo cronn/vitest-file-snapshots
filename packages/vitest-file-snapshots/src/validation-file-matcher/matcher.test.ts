@@ -41,7 +41,7 @@ describe("with default validation file options", () => {
       { name: "number", value: 4711 },
       { name: "string", value: "first line\nsecond line" },
     ]) {
-      expect.soft(value).toMatchValidationFile({ suffix: name });
+      expect.soft(value).toMatchValidationFile({ name });
     }
   });
 
@@ -87,8 +87,8 @@ describe("with default validation file options", () => {
   });
 
   test("appends suffix to file name", () => {
-    expect.soft("value1").toMatchValidationFile({ suffix: "value 1" });
-    expect.soft("value2").toMatchValidationFile({ suffix: "value 2" });
+    expect.soft("value1").toMatchValidationFile({ name: "value 1" });
+    expect.soft("value2").toMatchValidationFile({ name: "value 2" });
   });
 
   test("when matcher is inverted, throws error", () => {

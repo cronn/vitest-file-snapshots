@@ -127,8 +127,8 @@ function mapValue(value: string): string {
 
 test("value is mapped", () => {
   const data = { value: "value" };
-  expect.soft(initialValue).toMatchValidationFile({ suffix: "before" });
-  expect.soft(mapValue(initialValue)).toMatchValidationFile({ suffix: "after" });
+  expect.soft(initialValue).toMatchValidationFile({ name: "before" });
+  expect.soft(mapValue(initialValue)).toMatchValidationFile({ name: "after" });
 });
 
 // value_is_mapped_before.json
@@ -171,7 +171,7 @@ expect(value).toMatchValidationFile({
 });
 ```
 
-| Option                             | Default Value | Description                                                                                                                      |
-|------------------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `suffix`                           | `undefined`   | Appends `suffix` to the generated snapshot file. Should be used whenever having multiple snapshot assertions in a single `test`. |
-| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                                                      |
+| Option                             | Default Value | Description                                                                                               |
+|------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------|
+| `name`                             | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`.   |
+| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                               |
