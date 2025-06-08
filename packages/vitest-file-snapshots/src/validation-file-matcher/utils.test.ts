@@ -30,4 +30,10 @@ describe("parseTestPath", () => {
       "src/tests/feature",
     );
   });
+
+  test("resolves test path relative to testDir", () => {
+    expect(parseTestPath("src/tests/feature.test.ts", "src/tests")).toBe(
+      "feature",
+    );
+  });
 });

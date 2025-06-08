@@ -2,14 +2,6 @@ import type { SnapshotSerializer } from "./serializer";
 
 export interface ValidationFileMatcherConfig {
   /**
-   * Base directory for tests
-   *
-   * The paths of snapshot files will be relative to this directory.
-   * @default "."
-   */
-  baseDir?: string;
-
-  /**
    * Directory in which golden masters are stored
    *
    * @default "data/test/validation"
