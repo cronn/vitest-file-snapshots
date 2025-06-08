@@ -12,7 +12,7 @@ import type {
   VitestValidationFileMatcherConfig,
   VitestValidationFileMatchers,
 } from "./types";
-import { parseTestName } from "./utils";
+import { parseTestName, parseTestPath } from "./utils";
 
 export function registerValidationFileMatcher(
   config: VitestValidationFileMatcherConfig = {},
@@ -54,7 +54,7 @@ function matchValidationFile(
   const matcherResult = new ValidationFileMatcher(config).matchFileSnapshot(
     received,
     {
-      testPath,
+      testPath: parseTestPath(testPath),
       titlePath: parseTestName(currentTestName),
       name,
       serializer: new CompositeSerializer([

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { parseTestName } from "./utils";
+import { parseTestName, parseTestPath } from "./utils";
 
 describe("parseTestName", () => {
   test("splits test name into titles", () => {
@@ -7,3 +7,27 @@ describe("parseTestName", () => {
   });
 });
 
+describe("parseTestPath", () => {
+  test.each([
+    ".test.ts",
+    ".test.js",
+    ".test.tsx",
+    ".test.jsx",
+    ".test.mts",
+    ".test.mjs",
+    ".test.cts",
+    ".test.cjs",
+    ".spec.ts",
+    ".spec.js",
+    ".spec.tsx",
+    ".spec.jsx",
+    ".spec.mts",
+    ".spec.mjs",
+    ".spec.cts",
+    ".spec.cjs",
+  ])("removes test extension %s from test path", (testExtension) => {
+    expect(parseTestPath(`src/tests/feature${testExtension}`, ".")).toBe(
+      "src/tests/feature",
+    );
+  });
+});
