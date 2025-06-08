@@ -99,7 +99,7 @@ describe("with default validation file options", () => {
 describe("with custom validation file options", () => {
   beforeEach(() =>
     registerValidationFileMatcher({
-      baseDir: "src",
+      testDir: "src",
       validationDir: "custom-data/validation",
       outputDir: "custom-data/output",
     }),
