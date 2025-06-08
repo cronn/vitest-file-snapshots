@@ -68,8 +68,7 @@ function matchValidationFile(
 
   return {
     pass: equals(matcherResult.actual, matcherResult.expected, [], true),
-    message: (): string =>
-      `${matcherResult.actualFile} does not match ${matcherResult.validationFile}`,
+    message: matcherResult.message,
     actual: matcherResult.actual,
     expected: matcherResult.expected,
   };

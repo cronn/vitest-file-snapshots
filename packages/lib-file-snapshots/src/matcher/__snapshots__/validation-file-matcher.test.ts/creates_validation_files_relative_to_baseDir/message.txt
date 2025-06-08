@@ -1,0 +1,2 @@
+Actual file '.tmp/output/tests/feature.test.ts/custom_baseDir.txt'
+does not match validation file '.tmp/validation/tests/feature.test.ts/custom_baseDir.txt'
