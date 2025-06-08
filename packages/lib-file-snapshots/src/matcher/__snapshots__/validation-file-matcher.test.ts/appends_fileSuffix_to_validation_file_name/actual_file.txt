@@ -1,1 +1,0 @@
-.tmp/output/src/tests/file_with_suffix.txt

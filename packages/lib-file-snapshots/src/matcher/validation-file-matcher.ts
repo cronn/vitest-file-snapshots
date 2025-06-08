@@ -1,6 +1,5 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import "vitest";
 
 import type {
   MatchValidationFileOptions,
@@ -30,7 +29,7 @@ export class ValidationFileMatcher {
     actual: unknown,
     options: MatchValidationFileOptions,
   ): ValidationFileMatcherResult {
-    const { testName, testDir, fileSuffix, serializer } = options;
+    const { testPath, titlePath, name, serializer } = options;
 
     if (!serializer.canSerialize(actual)) {
       throw new Error(`Cannot serialize value of type ${typeof actual}`);
@@ -39,9 +38,9 @@ export class ValidationFileMatcher {
     const serializerResult = serializer.serialize(actual);
 
     const validationFilePath = this.buildValidationFilePath({
-      testName,
-      testDir,
-      fileSuffix,
+      titlePath,
+      testPath,
+      name,
       fileExtension: serializerResult.fileExtension,
     });
 
@@ -52,22 +51,22 @@ export class ValidationFileMatcher {
   }
 
   private buildValidationFilePath(options: ValidationFileMeta): string {
-    const { testName, testDir, fileSuffix, fileExtension } = options;
+    const { testPath, titlePath, name, fileExtension } = options;
 
-    const normalizedTestNames = testName.map(normalizeFileName);
-    const normalizedFileSuffix =
-      fileSuffix !== undefined ? `_${normalizeFileName(fileSuffix)}` : "";
+    const normalizedTitlePath = titlePath.map(normalizeFileName);
+    const normalizedFileName =
+      name !== undefined ? `_${normalizeFileName(name)}` : "";
 
-    const normalizedTestName = normalizedTestNames.pop();
+    const normalizedTestName = normalizedTitlePath.pop();
     const absoluteValidationFilePath = path.join(
-      testDir,
-      ...normalizedTestNames,
+      testPath,
+      ...normalizedTitlePath,
     );
     const relativeValidationFilePath = path.relative(
       this.baseDir,
       absoluteValidationFilePath,
     );
-    const validationFileName = `${normalizedTestName}${normalizedFileSuffix}.${fileExtension}`;
+    const validationFileName = `${normalizedTestName}${normalizedFileName}.${fileExtension}`;
     return path.join(relativeValidationFilePath, validationFileName);
   }
 

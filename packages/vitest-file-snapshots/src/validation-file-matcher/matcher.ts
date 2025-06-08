@@ -50,17 +50,17 @@ function matchValidationFile(
     throw new Error("Matcher negation is not supported");
   }
 
+  const { name, includeUndefinedObjectProperties } = options;
   const matcherResult = new ValidationFileMatcher(config).matchFileSnapshot(
     received,
     {
-      testName: parseTestName(currentTestName),
-      testDir: testPath,
-      fileSuffix: options.fileSuffix ?? options.suffix,
+      testPath,
+      titlePath: parseTestName(currentTestName),
+      name,
       serializer: new CompositeSerializer([
         new TextSerializer(),
         new JsonSerializer({
-          includeUndefinedObjectProperties:
-            options.includeUndefinedObjectProperties,
+          includeUndefinedObjectProperties,
         }),
       ]),
     },

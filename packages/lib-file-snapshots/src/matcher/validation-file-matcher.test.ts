@@ -51,8 +51,8 @@ test("when validation file is missing, creates validation file with marker", asy
       validationDir: path.join(TMP_DIR, "validation"),
       outputDir: path.join(TMP_DIR, "output"),
     }).matchFileSnapshot("value", {
-      testDir: "./src/tests",
-      testName: ["validation file", "missing"],
+      testPath: "./src/tests/feature.test.ts",
+      titlePath: ["validation file", "missing"],
       serializer: new TextSerializer(),
     }),
   );
@@ -62,8 +62,8 @@ test("when validation file exists, does not recreate validation file", async (co
   await snapshotMatcherResult(
     context,
     new ValidationFileMatcher().matchFileSnapshot(["value"], {
-      testDir: "./src/tests",
-      testName: ["validation file", "existing"],
+      testPath: "./src/tests/feature.test.ts",
+      titlePath: ["validation file", "existing"],
       serializer: new JsonSerializer(),
     }),
   );
@@ -79,14 +79,14 @@ test("creates validation files relative to baseDir", async (context) => {
       validationDir: path.join(TMP_DIR, "validation"),
       outputDir: path.join(TMP_DIR, "output"),
     }).matchFileSnapshot("value", {
-      testDir: "./src/tests",
-      testName: ["custom baseDir"],
+      testPath: "./src/tests/feature.test.ts",
+      titlePath: ["custom baseDir"],
       serializer: new TextSerializer(),
     }),
   );
 });
 
-test("appends fileSuffix to validation file name", async (context) => {
+test("appends name to validation file name", async (context) => {
   cleanTmpDir();
 
   await snapshotMatcherResult(
@@ -95,9 +95,9 @@ test("appends fileSuffix to validation file name", async (context) => {
       validationDir: path.join(TMP_DIR, "validation"),
       outputDir: path.join(TMP_DIR, "output"),
     }).matchFileSnapshot("value", {
-      testDir: "./src/tests",
-      testName: ["file"],
-      fileSuffix: "with suffix",
+      testPath: "./src/tests/feature.test.ts",
+      titlePath: ["file"],
+      name: "name",
       serializer: new TextSerializer(),
     }),
   );
@@ -106,8 +106,8 @@ test("appends fileSuffix to validation file name", async (context) => {
 test("when serializer does not support value, throws error", () => {
   expect(() =>
     new ValidationFileMatcher().matchFileSnapshot(["value"], {
-      testDir: "./src/tests",
-      testName: ["error"],
+      testPath: "./src/tests/feature.test.ts",
+      titlePath: ["error"],
       serializer: new FailingSerializer(),
     }),
   ).toThrowError();
