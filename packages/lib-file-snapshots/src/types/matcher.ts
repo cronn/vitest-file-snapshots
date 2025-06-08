@@ -64,4 +64,5 @@ export interface ValidationFileMatcherResult {
   expected: string;
   actualFile: string;
   validationFile: string;
+  message: () => string;
 }

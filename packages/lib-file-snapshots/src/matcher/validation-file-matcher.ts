@@ -94,6 +94,8 @@ export class ValidationFileMatcher {
       expected: readSnapshotFile(validationFile),
       actualFile,
       validationFile,
+      message: (): string =>
+        `Actual file '${actualFile}'\ndoes not match validation file '${validationFile}'`,
     };
   }
 }
