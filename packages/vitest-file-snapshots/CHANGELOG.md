@@ -1,5 +1,13 @@
 # @cronn/vitest-file-snapshots
 
+## 0.5.1
+
+### Patch Changes
+
+- 7ac4e8d: chore(deps): bump the vitest group with 3 updates
+- Updated dependencies [7ac4e8d]
+  - @cronn/lib-file-snapshots@0.2.1
+
 ## 0.5.0
 
 ### Minor Changes
