@@ -12,7 +12,7 @@ import type {
   VitestValidationFileMatcherConfig,
   VitestValidationFileMatchers,
 } from "./types";
-import { parseTestName } from "./utils";
+import { parseTestName, parseTestPath } from "./utils";
 
 export function registerValidationFileMatcher(
   config: VitestValidationFileMatcherConfig = {},
@@ -50,26 +50,25 @@ function matchValidationFile(
     throw new Error("Matcher negation is not supported");
   }
 
-  const matcherResult = new ValidationFileMatcher(config).matchFileSnapshot(
-    received,
-    {
-      testName: parseTestName(currentTestName),
-      testDir: testPath,
-      fileSuffix: options.fileSuffix ?? options.suffix,
-      serializer: new CompositeSerializer([
-        new TextSerializer(),
-        new JsonSerializer({
-          includeUndefinedObjectProperties:
-            options.includeUndefinedObjectProperties,
-        }),
-      ]),
-    },
-  );
+  const { testDir = ".", ...matcherConfig } = config;
+  const { name, includeUndefinedObjectProperties } = options;
+  const matcherResult = new ValidationFileMatcher(
+    matcherConfig,
+  ).matchFileSnapshot(received, {
+    testPath: parseTestPath(testPath, testDir),
+    titlePath: parseTestName(currentTestName),
+    name,
+    serializer: new CompositeSerializer([
+      new TextSerializer(),
+      new JsonSerializer({
+        includeUndefinedObjectProperties,
+      }),
+    ]),
+  });
 
   return {
     pass: equals(matcherResult.actual, matcherResult.expected, [], true),
-    message: (): string =>
-      `${matcherResult.actualFile} does not match ${matcherResult.validationFile}`,
+    message: matcherResult.message,
     actual: matcherResult.actual,
     expected: matcherResult.expected,
   };

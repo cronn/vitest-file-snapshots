@@ -4,18 +4,11 @@ export interface VitestValidationFileMatchers<R = unknown> {
 
 export interface VitestMatchValidationFileOptions {
   /**
-   * Appends `fileSuffix` to the generated snapshot file
+   * Unique name of the file snapshot
    *
-   * Should be used whenever having multiple snapshot assertions in a single `test`.
+   * Used to distinguish multiple file snapshots within the same `test`.
    */
-  fileSuffix?: string;
-
-  /**
-   * Appends `suffix` to the generated snapshot file
-   *
-   * @deprecated Use `fileSuffix` instead.
-   */
-  suffix?: string;
+  name?: string;
 
   /**
    * Serializes `undefined` properties in objects. By default, they are omitted.
@@ -32,7 +25,7 @@ export interface VitestValidationFileMatcherConfig {
    * The paths of snapshot files will be relative to this directory.
    * @default "."
    */
-  baseDir?: string;
+  testDir?: string;
 
   /**
    * Directory in which golden masters are stored

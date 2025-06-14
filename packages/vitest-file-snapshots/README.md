@@ -70,7 +70,7 @@ your `tsconfig.json`:
 
 ### Adding output files to `.gitignore`
 
-All file snapshots are generated to `/data/tests`. The golden masters will be
+All file snapshots are generated to `/data/test`. The golden masters will be
 stored in `/data/test/validation`, which should be under version control. The
 file snapshots generated for test runs will be stored under
 `/data/test/output` and should be ignored:
@@ -127,8 +127,8 @@ function mapValue(value: string): string {
 
 test("value is mapped", () => {
   const data = { value: "value" };
-  expect.soft(initialValue).toMatchValidationFile({ suffix: "before" });
-  expect.soft(mapValue(initialValue)).toMatchValidationFile({ suffix: "after" });
+  expect.soft(initialValue).toMatchValidationFile({ name: "before" });
+  expect.soft(mapValue(initialValue)).toMatchValidationFile({ name: "after" });
 });
 
 // value_is_mapped_before.json
@@ -150,13 +150,13 @@ Matcher options can be passed when registering the matcher in the setup file:
 
  ```ts
 registerValidationFileMatcher({
-  baseDir: "src"
+  testDir: "src"
 });
 ```
 
 | Option          | Default Value          | Description                                                                               |
 |-----------------|------------------------|-------------------------------------------------------------------------------------------|
-| `baseDir`       | `.`                    | Base directory for tests. The paths of snapshot files will be relative to this directory. |
+| `testDir`       | `.`                    | Base directory for tests. The paths of snapshot files will be relative to this directory. |
 | `validationDir` | `data/test/validation` | Directory in which golden masters are stored.                                             |
 | `outputDir`     | `data/test/output`     | Directory in which file snapshots from test runs are stored.                              |
 
@@ -171,7 +171,7 @@ expect(value).toMatchValidationFile({
 });
 ```
 
-| Option                             | Default Value | Description                                                                                                                      |
-|------------------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `suffix`                           | `undefined`   | Appends `suffix` to the generated snapshot file. Should be used whenever having multiple snapshot assertions in a single `test`. |
-| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                                                      |
+| Option                             | Default Value | Description                                                                                               |
+|------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------|
+| `name`                             | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`.   |
+| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                               |

@@ -2,14 +2,6 @@ import type { SnapshotSerializer } from "./serializer";
 
 export interface ValidationFileMatcherConfig {
   /**
-   * Base directory for tests
-   *
-   * The paths of snapshot files will be relative to this directory.
-   * @default "."
-   */
-  baseDir?: string;
-
-  /**
    * Directory in which golden masters are stored
    *
    * @default "data/test/validation"
@@ -26,23 +18,25 @@ export interface ValidationFileMatcherConfig {
 
 export interface MatchValidationFileOptions {
   /**
-   * The full name of the test, including the names of nested describe blocks
+   * The full path to the current test file
    *
-   * @example ["test feature", "when x, then y"]
+   * @example "src/tests/feature.test.ts"
    */
-  testName: string[];
+  testPath: string;
 
   /**
-   * The directory in which the current test is located
+   * The full path of titles describing the current test, including nested blocks
+   *
+   * @example ["test A", "when x, then y"]
    */
-  testDir: string;
+  titlePath: string[];
 
   /**
-   * Appends `fileSuffix` to the generated snapshot file
+   * Unique name of the file snapshot
    *
-   * Should be used whenever having multiple snapshot assertions in a single `test`.
+   * Used to distinguish multiple file snapshots within the same `test`.
    */
-  fileSuffix?: string;
+  name?: string;
 
   /**
    * The serializer to use for the snapshot
@@ -51,9 +45,9 @@ export interface MatchValidationFileOptions {
 }
 
 export interface ValidationFileMeta {
-  testName: string[];
-  testDir: string;
-  fileSuffix?: string;
+  testPath: string;
+  titlePath: string[];
+  name?: string;
   fileExtension: string;
 }
 
@@ -62,4 +56,5 @@ export interface ValidationFileMatcherResult {
   expected: string;
   actualFile: string;
   validationFile: string;
+  message: () => string;
 }
