@@ -13,7 +13,9 @@
       "**/dist",
       "**/.tmp",
       "**/__snapshots__",
-      "**/coverage"
+      "**/coverage",
+      "**/test-results",
+      "**/playwright-report"
     ]
   },
   "formatter": {
@@ -25,7 +27,7 @@
   },
   "linter": {
     "enabled": true,
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "tests/**/*"],
     "rules": {
       "recommended": true,
       "correctness": {
