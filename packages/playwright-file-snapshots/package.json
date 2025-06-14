@@ -1,0 +1,58 @@
+{
+  "name": "@cronn/playwright-file-snapshots",
+  "version": "0.0.0",
+  "description": "Write tests with Playwright using file snapshots",
+  "keywords": ["playwright", "file snapshots"],
+  "bugs": {
+    "url": "https://github.com/cronn/vitest-file-snapshots/issues"
+  },
+  "author": "cronn",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cronn/vitest-file-snapshots.git",
+    "directory": "packages/playwright-file-snapshots"
+  },
+  "homepage": "https://github.com/cronn/vitest-file-snapshots",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "test:unit": "vitest run",
+    "test:unit:coverage": "vitest run --coverage",
+    "test:integration": "playwright test",
+    "playwright:install": "playwright install chromium --with-deps",
+    "compile": "tsc",
+    "build": "tsup",
+    "ci": "biome ci . && pnpm run compile && pnpm run test:unit:coverage && pnpm run playwright:install && pnpm run test:integration && pnpm run build"
+  },
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@cronn/lib-file-snapshots": "workspace:*"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@cronn/shared-configs": "workspace:*",
+    "@changesets/cli": "catalog:",
+    "@playwright/test": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-istanbul": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@playwright/test": "^1.5"
+  }
+}

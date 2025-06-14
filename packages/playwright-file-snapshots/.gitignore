@@ -1,0 +1,7 @@
+# validation files
+/data/test/output
+/custom-data/output
+
+# Playwright
+test-results
+playwright-report

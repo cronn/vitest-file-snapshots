@@ -31,3 +31,17 @@ jobs:
 
       - name: Run CI script
         run: pnpm run --recursive ci
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: vitest-reports
+          path: packages/*/coverage/
+          retention-days: 3
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-reports
+          path: packages/*/playwright-report/
+          retention-days: 3
