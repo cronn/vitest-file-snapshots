@@ -1,5 +1,17 @@
 # @cronn/lib-file-snapshots
 
+## 0.3.0
+
+### Minor Changes
+
+- f73c90b: Breaking change: Move baseDir handling to vitest-file-snapshots and rename parameter to testDir
+- 2977b53: Rename validation file matcher options for clarity
+
+### Patch Changes
+
+- 7ac4e8d: chore(deps): bump the vitest group with 3 updates
+- 1dadd57: refactor: Extract message to lib-file-snapshots
+
 ## 0.2.0
 
 ### Minor Changes

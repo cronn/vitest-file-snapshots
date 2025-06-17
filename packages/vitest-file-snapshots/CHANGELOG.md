@@ -1,5 +1,24 @@
 # @cronn/vitest-file-snapshots
 
+## 0.6.0
+
+### Minor Changes
+
+- 3e39407: Breaking change: Rename `fileSuffix` option to `name` and remove deprecated `suffix` option
+- f73c90b: Breaking change: Move baseDir handling to vitest-file-snapshots and rename parameter to testDir
+- 1e72608: Breaking change: Remove test extension from test path
+
+### Patch Changes
+
+- 7ac4e8d: chore(deps): bump the vitest group with 3 updates
+- 1dadd57: refactor: Extract message to lib-file-snapshots
+- 2977b53: Rename validation file matcher options for clarity
+- Updated dependencies [7ac4e8d]
+- Updated dependencies [1dadd57]
+- Updated dependencies [f73c90b]
+- Updated dependencies [2977b53]
+  - @cronn/lib-file-snapshots@0.3.0
+
 ## 0.5.0
 
 ### Minor Changes
