@@ -4,16 +4,16 @@
   "description": "Write tests with Playwright using file snapshots",
   "keywords": ["playwright", "file snapshots"],
   "bugs": {
-    "url": "https://github.com/cronn/vitest-file-snapshots/issues"
+    "url": "https://github.com/cronn/file-snapshots/issues"
   },
   "author": "cronn",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cronn/vitest-file-snapshots.git",
+    "url": "https://github.com/cronn/file-snapshots.git",
     "directory": "packages/playwright-file-snapshots"
   },
-  "homepage": "https://github.com/cronn/vitest-file-snapshots",
+  "homepage": "https://github.com/cronn/file-snapshots",
   "engines": {
     "node": ">=22",
     "pnpm": ">=10"
