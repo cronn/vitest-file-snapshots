@@ -4,8 +4,8 @@ This is a monorepo for writing tests with file snapshots, providing integrations
 
 ## Available Integrations
 
-- [vitest-file-snapshots](https://github.com/cronn/vitest-file-snapshots/tree/main/packages/vitest-file-snapshots)
-- [playwright-file-snapshots](https://github.com/cronn/vitest-file-snapshots/tree/main/packages/playwright-file-snapshots)
+- [vitest-file-snapshots](https://github.com/cronn/file-snapshots/tree/main/packages/vitest-file-snapshots)
+- [playwright-file-snapshots](https://github.com/cronn/file-snapshots/tree/main/packages/playwright-file-snapshots)
 
 ## See Also
 
