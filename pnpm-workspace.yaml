@@ -5,7 +5,7 @@ catalog:
   "@biomejs/biome": 1.9.4
   "@changesets/cli": 2.29.4
   "@playwright/test": 1.52.0
-  "@types/node": 22.15.30
+  "@types/node": 24.0.3
   "@vitest/coverage-istanbul": 3.2.3
   "@vitest/expect": 3.2.3
   "tsup": 8.5.0
