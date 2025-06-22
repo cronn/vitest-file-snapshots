@@ -3,7 +3,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig((options) =>
   tsupConfig({
-    entry: ["src/matcher.ts"],
+    entry: ["src/register.ts"],
     ...options,
   }),
 );

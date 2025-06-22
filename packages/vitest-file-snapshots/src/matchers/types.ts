@@ -1,5 +1,6 @@
 export interface VitestValidationFileMatchers<R = unknown> {
-  toMatchValidationFile: (options?: VitestMatchValidationFileOptions) => R;
+  toMatchTextFile: (options?: VitestMatchValidationFileOptions) => R;
+  toMatchJsonFile: (options?: VitestMatchJsonFileOptions) => R;
 }
 
 export interface VitestMatchValidationFileOptions {
@@ -9,7 +10,10 @@ export interface VitestMatchValidationFileOptions {
    * Used to distinguish multiple file snapshots within the same `test`.
    */
   name?: string;
+}
 
+export interface VitestMatchJsonFileOptions
+  extends VitestMatchValidationFileOptions {
   /**
    * Serializes `undefined` properties in objects. By default, they are omitted.
    *

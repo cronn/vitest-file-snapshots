@@ -19,10 +19,9 @@ drawbacks:
 the following features:
 
 - Zero configuration: snapshot files are named based on the test name
-- Automatic serialization of snapshots as JSON (default) or text (string values
-  only)
+- Multiple snapshot formats: JSON, text
 - Automatic serialization of native JS values like `undefined`, `Number.NaN` or
-  `Date` objects.
+  `Date` objects in JSON
 
 ## Getting Started
 
@@ -40,14 +39,14 @@ yarn add -D @cronn/vitest-file-snapshots
 pnpm add -D @cronn/vitest-file-snapshots
 ```
 
-### Registering the Custom Matcher in your project
+### Registering the Custom Matchers in your project
 
-Import the Custom Matcher in your `vitest-setup.ts`:
+Import the Custom Matchers in your `vitest-setup.ts`:
 
 ```ts
-import { registerValidationFileMatcher } from "@cronn/vitest-file-snapshots/matcher";
+import { registerValidationFileMatchers } from "@cronn/vitest-file-snapshots/register";
 
-registerValidationFileMatcher();
+registerValidationFileMatchers();
 ```
 
 If you don't have a setup file in your project, you need to create it and add it
@@ -86,11 +85,16 @@ file snapshots generated for test runs will be stored under
 
 ## Writing Tests
 
-File snapshot assertions use the custom matcher `toMatchValidationFile`:
+File snapshot assertions use one of the custom matchers:
+
+- `toMatchJsonFile`
+- `toMatchTextFile`
+
+### JSON File Snapshot
 
 ```ts
 test("value is expected value", () => {
-  expect({ value: "expected value" }).toMatchValidationFile();
+  expect({ value: "expected value" }).toMatchJsonFile();
 });
 
 // value_is_expected_value.json
@@ -99,7 +103,18 @@ test("value is expected value", () => {
 // }
 ```
 
-### Testing Multiple Expectations
+### Text File Snapshot
+
+```ts
+test("value is expected value", () => {
+  expect("expected value").toMatchTextFile();
+});
+
+// value_is_expected_value.txt
+// expected value
+```
+
+### Testing Multiple Expectations in a Single File
 
 ```ts
 function mapToString(value: boolean | number): string {
@@ -111,7 +126,7 @@ test("maps values to string", () => {
     boolean: mapToString(true),
     positiveNumber: mapToString(1),
     negativeNumber: mapToString(-1),
-  }).toMatchValidationFile();
+  }).toMatchJsonFile();
 });
 
 // maps_values_to_string.json
@@ -131,8 +146,8 @@ function mapValue(value: string): string {
 
 test("value is mapped", () => {
   const data = { value: "value" };
-  expect.soft(initialValue).toMatchValidationFile({ name: "before" });
-  expect.soft(mapValue(initialValue)).toMatchValidationFile({ name: "after" });
+  expect.soft(initialValue).toMatchJsonFile({ name: "before" });
+  expect.soft(mapValue(initialValue)).toMatchJsonFile({ name: "after" });
 });
 
 // value_is_mapped_before.json
@@ -150,10 +165,10 @@ test("value is mapped", () => {
 
 ### Matcher Options
 
-Matcher options can be passed when registering the matcher in the setup file:
+Matcher options can be passed when registering the matchers in the setup file:
 
  ```ts
-registerValidationFileMatcher({
+registerValidationFileMatchers({
   testDir: "src"
 });
 ```
@@ -165,17 +180,22 @@ registerValidationFileMatcher({
 | `outputDir`     | `data/test/output`     | Directory in which file snapshots from test runs are stored.                              |
 
 
-### Snapshot Options
+### File Snapshot Options
 
 Snapshot options can be passed whenever calling the validation file matcher:
 
  ```ts
-expect(value).toMatchValidationFile({
-  includeUndefinedObjectProperties: true
+expect(value).toMatchJsonFile({
+  name: "snapshot"
 });
 ```
 
-| Option                             | Default Value | Description                                                                                               |
-|------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------|
-| `name`                             | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`.   |
-| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                               |
+| Option                             | Default Value | Description                                                                                             |
+|------------------------------------|---------------|---------------------------------------------------------------------------------------------------------|
+| `name`                             | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`. |
+
+#### JSON Snapshot Options
+
+| Option                             | Default Value | Description                                                                                            |
+|------------------------------------|---------------|--------------------------------------------------------------------------------------------------------|
+| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                |
