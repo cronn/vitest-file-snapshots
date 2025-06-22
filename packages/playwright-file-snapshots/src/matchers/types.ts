@@ -17,8 +17,12 @@ export interface PlaywrightValidationFileMatcherConfig {
 }
 
 export interface PlaywrightValidationFileMatchers {
-  toMatchValidationFile: (
+  toMatchJsonFile: (
     actual: unknown,
+    options?: PlaywrightMatchJsonFileOptions,
+  ) => MatcherReturnType;
+  toMatchTextFile: (
+    actual: string,
     options?: PlaywrightMatchValidationFileOptions,
   ) => MatcherReturnType;
 }
@@ -30,7 +34,10 @@ export interface PlaywrightMatchValidationFileOptions {
    * Used to distinguish multiple file snapshots within the same `test` or `test.step`.
    */
   name?: string;
+}
 
+export interface PlaywrightMatchJsonFileOptions
+  extends PlaywrightMatchValidationFileOptions {
   /**
    * Serializes `undefined` properties in objects. By default, they are omitted.
    *

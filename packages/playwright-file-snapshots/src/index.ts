@@ -1,1 +1,1 @@
-export { defineValidationFileExpect } from "./validation-file-matcher/matcher";
+export { defineValidationFileExpect } from "./matchers/define-expect";
