@@ -1,11 +1,8 @@
 import {
-  CompositeSerializer,
-  JsonSerializer,
-  TextSerializer,
+  type SnapshotSerializer,
   ValidationFileMatcher,
 } from "@cronn/lib-file-snapshots";
 import {
-  type Expect,
   type ExpectMatcherState,
   type MatcherReturnType,
   expect as baseExpect,
@@ -14,32 +11,22 @@ import {
 import type {
   PlaywrightMatchValidationFileOptions,
   PlaywrightValidationFileMatcherConfig,
-  PlaywrightValidationFileMatchers,
 } from "./types";
 import { parseTestInfo } from "./utils";
 
-export function defineValidationFileExpect(
-  config: PlaywrightValidationFileMatcherConfig = {},
-): Expect<PlaywrightValidationFileMatchers> {
-  function toMatchValidationFile(
-    this: ExpectMatcherState,
-    actual: unknown,
-    options: PlaywrightMatchValidationFileOptions = {},
-  ): MatcherReturnType {
-    return matchValidationFile(actual, config, options, this);
-  }
-
-  return baseExpect.extend({
-    toMatchValidationFile,
-  });
+interface MatchValidationFileParams {
+  actual: unknown;
+  name: string;
+  serializer: SnapshotSerializer;
+  config: PlaywrightValidationFileMatcherConfig;
+  options: PlaywrightMatchValidationFileOptions;
+  matcherState: ExpectMatcherState;
 }
 
-function matchValidationFile(
-  actual: unknown,
-  config: PlaywrightValidationFileMatcherConfig,
-  options: PlaywrightMatchValidationFileOptions,
-  matcherState: ExpectMatcherState,
+export function matchValidationFile(
+  params: MatchValidationFileParams,
 ): MatcherReturnType {
+  const { actual, serializer, config, options, matcherState } = params;
   const { isNot } = matcherState;
 
   if (isNot) {
@@ -49,19 +36,14 @@ function matchValidationFile(
   const { titlePath, testPath } = parseTestInfo(test.info());
   let pass: boolean;
 
-  const { name, includeUndefinedObjectProperties } = options;
+  const { name } = options;
   const matcherResult = new ValidationFileMatcher(config).matchFileSnapshot(
     actual,
     {
       testPath,
       titlePath,
       name,
-      serializer: new CompositeSerializer([
-        new TextSerializer(),
-        new JsonSerializer({
-          includeUndefinedObjectProperties,
-        }),
-      ]),
+      serializer,
     },
   );
 
@@ -73,7 +55,7 @@ function matchValidationFile(
   }
 
   return {
-    name: "toMatchValidationFile",
+    name,
     pass,
     message: matcherResult.message,
     expected: matcherResult.expected,
