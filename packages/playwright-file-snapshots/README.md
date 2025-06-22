@@ -18,9 +18,13 @@ File snapshots can help to increase test coverage by enabling assertions which c
 
 ```shell
 npm install -D @cronn/playwright-file-snapshots
+```
 
+```shell
 yarn add -D @cronn/playwright-file-snapshots
+```
 
+```shell
 pnpm add -D @cronn/playwright-file-snapshots
 ```
 

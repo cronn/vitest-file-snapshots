@@ -30,9 +30,13 @@ the following features:
 
 ```shell
 npm install -D @cronn/vitest-file-snapshots
+```
 
+```shell
 yarn add -D @cronn/vitest-file-snapshots
+```
 
+```shell
 pnpm add -D @cronn/vitest-file-snapshots
 ```
 
