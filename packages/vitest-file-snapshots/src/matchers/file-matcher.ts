@@ -1,41 +1,27 @@
 import type { ExpectationResult, MatcherState } from "@vitest/expect";
 
 import {
-  CompositeSerializer,
-  JsonSerializer,
-  TextSerializer,
+  type SnapshotSerializer,
   ValidationFileMatcher,
 } from "@cronn/lib-file-snapshots";
-import { expect } from "vitest";
 import type {
   VitestMatchValidationFileOptions,
   VitestValidationFileMatcherConfig,
-  VitestValidationFileMatchers,
 } from "./types";
 import { parseTestName, parseTestPath } from "./utils";
 
-export function registerValidationFileMatcher(
-  config: VitestValidationFileMatcherConfig = {},
-): void {
-  function toMatchValidationFile(
-    this: MatcherState,
-    received: unknown,
-    options: VitestMatchValidationFileOptions = {},
-  ): ExpectationResult {
-    return matchValidationFile(received, config, options, this);
-  }
-
-  expect.extend({
-    toMatchValidationFile,
-  } satisfies VitestValidationFileMatchers);
+interface MatchValidationFileParams {
+  received: unknown;
+  serializer: SnapshotSerializer;
+  config: VitestValidationFileMatcherConfig;
+  options: VitestMatchValidationFileOptions;
+  matcherState: MatcherState;
 }
 
-function matchValidationFile(
-  received: unknown,
-  config: VitestValidationFileMatcherConfig,
-  options: VitestMatchValidationFileOptions,
-  matcherState: MatcherState,
+export function matchValidationFile(
+  params: MatchValidationFileParams,
 ): ExpectationResult {
+  const { received, serializer, config, options, matcherState } = params;
   const { currentTestName, testPath, equals, isNot } = matcherState;
 
   if (currentTestName === undefined) {
@@ -51,19 +37,14 @@ function matchValidationFile(
   }
 
   const { testDir = ".", ...matcherConfig } = config;
-  const { name, includeUndefinedObjectProperties } = options;
+  const { name } = options;
   const matcherResult = new ValidationFileMatcher(
     matcherConfig,
   ).matchFileSnapshot(received, {
     testPath: parseTestPath(testPath, testDir),
     titlePath: parseTestName(currentTestName),
     name,
-    serializer: new CompositeSerializer([
-      new TextSerializer(),
-      new JsonSerializer({
-        includeUndefinedObjectProperties,
-      }),
-    ]),
+    serializer,
   });
 
   return {
