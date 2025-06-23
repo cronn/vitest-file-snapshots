@@ -31,12 +31,36 @@ pnpm add -D @cronn/playwright-file-snapshots
 
 ### Using the Custom Matchers in your project
 
-Import the Custom Matchers in your test:
+Define the Custom Matchers as a reusable export (e.g. in `fixtures.ts`):
 
 ```ts
 import { defineValidationFileExpect } from "@cronn/playwright-file-snapshots";
 
-const expect = defineValidationFileExpect();
+export const expect = defineValidationFileExpect();
+```
+
+Then import your custom expect instead of Playwright's base `expect` in your tests:
+
+ ```ts
+import { test } from "@playwright/test";
+import { expect } from "./fixtures";
+
+test("matches JSON file", () => {
+  const snapshot = "…";
+  expect(snapshot).toMatchJsonFile();
+});
+```
+
+If you are already using other custom matchers, you can merge them with the validation file matchers:
+
+```ts
+import { mergeTests, mergeExpects } from "@playwright/test";
+import { defineValidationFileExpect } from "@cronn/playwright-file-snapshots";
+
+const expect = mergeExpects(
+  defineValidationFileExpect(),
+  otherExpect,
+);
 ```
 
 ### Adding output files to `.gitignore`
