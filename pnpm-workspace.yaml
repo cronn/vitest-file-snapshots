@@ -2,7 +2,7 @@ packages:
   - packages/*
 
 catalog:
-  "@biomejs/biome": 1.9.4
+  "@biomejs/biome": 2.0.5
   "@changesets/cli": 2.29.5
   "@playwright/test": 1.53.1
   "@types/node": 22.15.30
