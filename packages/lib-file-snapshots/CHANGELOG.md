@@ -1,5 +1,16 @@
 # @cronn/lib-file-snapshots
 
+## 0.4.0
+
+### Minor Changes
+
+- 8dd1d95: Remove obsolete `CompositeSerializer`
+
+### Patch Changes
+
+- b3f93ce: Change repo URLs after rename
+- 082aa27: Export interface `SnaphotSerializer`
+
 ## 0.3.0
 
 ### Minor Changes
