@@ -137,6 +137,29 @@ test("maps values to string", () => {
 // }
 ```
 
+### Normalization of Snapshots
+
+Normalizers can be used to apply custom normalization, e.g. mask values which are not stable. Custom normalizers are applied before internal normalizers and the snapshot serialization.
+
+```ts
+function maskDate(value: unknown): unknown {
+  if (value instanceof Date) {
+    return "[DATE]";
+  }
+  
+  return value;
+}
+
+test("date is masked", () => {
+  expect({ date: new Date() }).toMatchJsonFile({ normalizers: [maskDate] });
+});
+
+// date_is_masked.json
+// {
+//   "date": "[DATE]"
+// }
+```
+
 ### Using Soft Assertions
 
 ```ts
@@ -190,9 +213,10 @@ expect(value).toMatchJsonFile({
 });
 ```
 
-| Option                             | Default Value | Description                                                                                             |
-|------------------------------------|---------------|---------------------------------------------------------------------------------------------------------|
-| `name`                             | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`. |
+| Option        | Default Value | Description                                                                                             |
+|---------------|---------------|---------------------------------------------------------------------------------------------------------|
+| `name`        | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`. |
+| `normalizers` | `[]`          | Custom normalizers to apply before serialization.                                                       |
 
 #### JSON Snapshot Options
 
