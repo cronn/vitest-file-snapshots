@@ -4,9 +4,15 @@ Write tests with Playwright using file snapshots.
 
 ## Motivation
 
-Classical assertions in Playwright typically assert only specific aspects of a page considered relevant for the current test. Complex assertions are usually cumbersome to write and hard to maintain. Also, regressions caused by side effects might be introduced unnoticed, because assertions focus only on what's expected to change after a user interaction.
+Classical assertions in Playwright typically assert only specific aspects of a
+page considered relevant for the current test. Complex assertions are usually
+cumbersome to write and hard to maintain. Also, regressions caused by side
+effects might be introduced unnoticed, because assertions focus only on what's
+expected to change after a user interaction.
 
-File snapshots can help to increase test coverage by enabling assertions which cover larger portions of a tested page. `playwright-file-snapshots` provide custom matchers for snapshot testing with the following features:
+File snapshots can help to increase test coverage by enabling assertions which
+cover larger portions of a tested page. `playwright-file-snapshots` provide
+custom matchers for snapshot testing with the following features:
 
 - Zero configuration: snapshot files are named based on the test name
 - Multiple snapshot formats: JSON, text
@@ -39,7 +45,8 @@ import { defineValidationFileExpect } from "@cronn/playwright-file-snapshots";
 export const expect = defineValidationFileExpect();
 ```
 
-Then import your custom expect instead of Playwright's base `expect` in your tests:
+Then import your custom expect instead of Playwright's base `expect` in your
+tests:
 
  ```ts
 import { test } from "@playwright/test";
@@ -51,7 +58,8 @@ test("matches JSON file", () => {
 });
 ```
 
-If you are already using other custom matchers, you can merge them with the validation file matchers:
+If you are already using other custom matchers, you can merge them with the
+validation file matchers:
 
 ```ts
 import { mergeTests, mergeExpects } from "@playwright/test";
@@ -108,7 +116,9 @@ test("value is expected value", () => {
 
 ### Normalization of Snapshots
 
-Normalizers can be used to apply custom normalization, e.g. mask values which are not stable. Custom normalizers are applied before internal normalizers and the snapshot serialization.
+Normalizers can be used to apply custom normalization, e.g. mask values which
+are not stable. Custom normalizers are applied before internal normalizers and
+the snapshot serialization.
 
 ```ts
 function maskDate(value: unknown): unknown {
@@ -131,7 +141,8 @@ test("date is masked", () => {
 
 ### Using Soft Assertions
 
-All file snapshot matchers use soft assertions by default. This allows to check all snapshots within a test in single run:
+All file snapshot matchers use soft assertions by default. This allows to check
+all snapshots within a test in single run:
 
 ```ts
 test("perform login", async () => {
@@ -163,11 +174,10 @@ const expect = defineValidationFileExpect({
 });
 ```
 
-| Option          | Default Value          | Description                                                                               |
-|-----------------|------------------------|-------------------------------------------------------------------------------------------|
-| `validationDir` | `data/test/validation` | Directory in which golden masters are stored.                                             |
-| `outputDir`     | `data/test/output`     | Directory in which file snapshots from test runs are stored.                              |
-
+| Option          | Default Value          | Description                                                  |
+|-----------------|------------------------|--------------------------------------------------------------|
+| `validationDir` | `data/test/validation` | Directory in which golden masters are stored.                |
+| `outputDir`     | `data/test/output`     | Directory in which file snapshots from test runs are stored. |
 
 ### File Snapshot Options
 
@@ -179,13 +189,13 @@ expect(value).toMatchTextFile({
 });
 ```
 
-| Option                             | Default Value | Description                                                                                               |
-|------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------|
-| `name`                             | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`.   |
-| `normalizers`                      | `[]`          | Custom normalizers to apply before serialization.                                                         |
+| Option        | Default Value | Description                                                                                             |
+|---------------|---------------|---------------------------------------------------------------------------------------------------------|
+| `name`        | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`. |
+| `normalizers` | `[]`          | Custom normalizers to apply before serialization.                                                       |
 
 #### JSON Snapshot Options
 
-| Option                             | Default Value | Description                                                                                            |
-|------------------------------------|---------------|--------------------------------------------------------------------------------------------------------|
-| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                |
+| Option                             | Default Value | Description                                                                 |
+|------------------------------------|---------------|-----------------------------------------------------------------------------|
+| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted. |
