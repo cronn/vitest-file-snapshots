@@ -16,3 +16,15 @@ test("when includeUndefinedObjectProperties is true, serializes undefined object
     includeUndefinedObjectProperties: true,
   });
 });
+
+test("applies normalizer", () => {
+  function maskNumber(value: unknown): unknown {
+    if (typeof value !== "number") {
+      return value;
+    }
+
+    return "[NUMBER]";
+  }
+
+  expect({ number: 4711 }).toMatchJsonFile({ normalizers: [maskNumber] });
+});
