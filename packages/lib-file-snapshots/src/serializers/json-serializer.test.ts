@@ -1,6 +1,10 @@
 import { test } from "vitest";
 import { type SerializerTestFn, testSerializer } from "../utils/test";
-import { JsonSerializer, type JsonSerializerOptions } from "./json-serializer";
+import {
+  type JsonNormalizerContext,
+  JsonSerializer,
+  type JsonSerializerOptions,
+} from "./json-serializer";
 
 function jsonSerializerTest(
   value: unknown,
@@ -93,3 +97,47 @@ test(
     return "value";
   }),
 );
+
+test(
+  "custom normalizers",
+  jsonSerializerTest(
+    {
+      number: 4711,
+      array: ["item 1", "item 2"],
+      object: {
+        key: "value",
+      },
+      comment: "comment",
+    },
+    {
+      normalizers: [removeCommentProperty, prefixWithKey, maskNumber],
+    },
+  ),
+);
+
+function removeCommentProperty(value: unknown): unknown {
+  if (typeof value === "object" && value !== null && "comment" in value) {
+    return { ...value, comment: undefined };
+  }
+
+  return value;
+}
+
+function maskNumber(value: unknown): unknown {
+  if (typeof value === "number") {
+    return "[NUMBER]";
+  }
+
+  return value;
+}
+
+function prefixWithKey(
+  value: unknown,
+  context: JsonNormalizerContext,
+): unknown {
+  if (context.key === undefined || typeof value !== "string") {
+    return value;
+  }
+
+  return `${context.key}:${value}`;
+}
