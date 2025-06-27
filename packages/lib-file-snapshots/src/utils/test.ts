@@ -61,7 +61,9 @@ interface ResolvedTestContext {
 
 export function resolveTestContext(context: TestContext): ResolvedTestContext {
   return {
-    testFileName: path.basename(context.task.file.name),
+    testFileName: path
+      .basename(context.task.file.name)
+      .replace(/\.test.ts$/, ""),
     testName: context.task.name,
   };
 }

@@ -19,14 +19,30 @@ export interface JsonSerializerOptions {
    * @default false
    */
   includeUndefinedObjectProperties?: boolean;
+
+  /**
+   * Custom normalizers to apply before serialization
+   */
+  normalizers?: JsonNormalizer[];
+}
+
+export type JsonNormalizer = (
+  value: unknown,
+  context: JsonNormalizerContext,
+) => unknown;
+
+export interface JsonNormalizerContext {
+  key?: string;
 }
 
 export class JsonSerializer implements SnapshotSerializer {
   private readonly includeUndefinedObjectProperties: boolean;
+  private readonly normalizers: JsonNormalizer[];
 
   public constructor(options: JsonSerializerOptions = {}) {
     this.includeUndefinedObjectProperties =
       options.includeUndefinedObjectProperties ?? false;
+    this.normalizers = options.normalizers ?? [];
   }
 
   public canSerialize(value: unknown): boolean {
@@ -34,10 +50,7 @@ export class JsonSerializer implements SnapshotSerializer {
   }
 
   public serialize(value: unknown): SnapshotSerializerResult {
-    const jsonValue =
-      isPlainObject(value) || isArray(value)
-        ? this.normalizeValueRecursive(value)
-        : this.normalizeValue(value);
+    const jsonValue = this.normalizeValueRecursive(value);
     const serializedValue = JSON.stringify(jsonValue, undefined, 2);
 
     return {
@@ -46,61 +59,55 @@ export class JsonSerializer implements SnapshotSerializer {
     };
   }
 
-  private normalizeValueRecursive(value: unknown): JsonValue {
-    if (isArray(value)) {
-      return this.normalizeArray(value);
-    }
+  private normalizeValueRecursive(
+    value: unknown,
+    context?: JsonNormalizerContext,
+  ): JsonValue {
+    const customValue = this.applyCustomNormalizers(value, context);
 
-    if (isPlainObject(value)) {
-      return this.normalizePlainObject(value);
-    }
-
-    if (
-      typeof value === "string" ||
-      typeof value === "boolean" ||
-      value === null
-    ) {
-      return value;
-    }
-
-    return this.normalizeValue(value);
-  }
-
-  private normalizeValue(value: unknown): JsonValue {
-    if (value === undefined) {
+    if (customValue === undefined) {
       return this.serializedValue("undefined");
     }
 
     if (
-      value === null ||
-      typeof value === "string" ||
-      typeof value === "boolean"
+      customValue === null ||
+      typeof customValue === "string" ||
+      typeof customValue === "boolean"
     ) {
-      return this.serializedValue(typeof value, { value });
+      const isRoot = context === undefined;
+      return isRoot
+        ? this.serializedValue(typeof customValue, {
+            value: customValue,
+          })
+        : customValue;
     }
 
-    if (typeof value === "number") {
-      return this.normalizeNumber(value);
+    if (typeof customValue === "number") {
+      return this.normalizeNumber(customValue);
     }
 
-    if (typeof value === "bigint") {
-      return this.serializedValue("bigint", { value: value.toString() });
+    if (typeof customValue === "bigint") {
+      return this.serializedValue("bigint", {
+        value: customValue.toString(),
+      });
     }
 
-    if (typeof value === "symbol") {
-      return this.serializedValue("symbol", { description: value.description });
+    if (typeof customValue === "symbol") {
+      return this.serializedValue("symbol", {
+        description: customValue.description,
+      });
     }
 
-    if (typeof value === "function") {
-      return this.serializedValue("function", { name: value.name });
+    if (typeof customValue === "function") {
+      return this.serializedValue("function", { name: customValue.name });
     }
 
-    if (typeof value === "object") {
-      return this.normalizeObject(value);
+    if (typeof customValue === "object") {
+      return this.normalizeObject(customValue);
     }
 
     throw new Error(
-      `Missing JSON normalization for value of type ${typeof value}.`,
+      `Missing JSON normalization for value of type ${typeof customValue}.`,
     );
   }
 
@@ -136,10 +143,20 @@ export class JsonSerializer implements SnapshotSerializer {
   }
 
   private normalizeArray(value: unknown[]): JsonValue {
-    return value.map((item) => this.normalizeValueRecursive(item));
+    return value.map((item, index) =>
+      this.normalizeValueRecursive(item, { key: index.toString() }),
+    );
   }
 
   private normalizeObject(value: object): JsonValue {
+    if (isArray(value)) {
+      return this.normalizeArray(value);
+    }
+
+    if (isPlainObject(value)) {
+      return this.normalizePlainObject(value);
+    }
+
     if (value instanceof Date) {
       return this.normalizeDate(value);
     }
@@ -186,7 +203,9 @@ export class JsonSerializer implements SnapshotSerializer {
       }
 
       this.assertKeyType(key);
-      normalizedObject[key] = this.normalizeValueRecursive(propertyValue);
+      normalizedObject[key] = this.normalizeValueRecursive(propertyValue, {
+        key,
+      });
     }
 
     return normalizedObject;
@@ -214,5 +233,18 @@ export class JsonSerializer implements SnapshotSerializer {
     if (!(typeof key === "string")) {
       throw new Error(`Key of type ${typeof key} cannot be normalized.`);
     }
+  }
+
+  private applyCustomNormalizers(
+    value: unknown,
+    context: JsonNormalizerContext = {},
+  ): unknown {
+    let normalizedValue = value;
+
+    for (const normalizer of this.normalizers) {
+      normalizedValue = normalizer(normalizedValue, context);
+    }
+
+    return normalizedValue;
   }
 }

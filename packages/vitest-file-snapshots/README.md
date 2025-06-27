@@ -44,7 +44,9 @@ pnpm add -D @cronn/vitest-file-snapshots
 Import the Custom Matchers in your `vitest-setup.ts`:
 
 ```ts
-import { registerValidationFileMatchers } from "@cronn/vitest-file-snapshots/register";
+import {
+  registerValidationFileMatchers
+} from "@cronn/vitest-file-snapshots/register";
 
 registerValidationFileMatchers();
 ```
@@ -137,6 +139,31 @@ test("maps values to string", () => {
 // }
 ```
 
+### Normalization of Snapshots
+
+Normalizers can be used to apply custom normalization, e.g. mask values which
+are not stable. Custom normalizers are applied before internal normalizers and
+the snapshot serialization.
+
+```ts
+function maskDate(value: unknown): unknown {
+  if (value instanceof Date) {
+    return "[DATE]";
+  }
+
+  return value;
+}
+
+test("date is masked", () => {
+  expect({ date: new Date() }).toMatchJsonFile({ normalizers: [maskDate] });
+});
+
+// date_is_masked.json
+// {
+//   "date": "[DATE]"
+// }
+```
+
 ### Using Soft Assertions
 
 ```ts
@@ -179,7 +206,6 @@ registerValidationFileMatchers({
 | `validationDir` | `data/test/validation` | Directory in which golden masters are stored.                                             |
 | `outputDir`     | `data/test/output`     | Directory in which file snapshots from test runs are stored.                              |
 
-
 ### File Snapshot Options
 
 Snapshot options can be passed whenever calling the validation file matcher:
@@ -190,12 +216,13 @@ expect(value).toMatchJsonFile({
 });
 ```
 
-| Option                             | Default Value | Description                                                                                             |
-|------------------------------------|---------------|---------------------------------------------------------------------------------------------------------|
-| `name`                             | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`. |
+| Option        | Default Value | Description                                                                                             |
+|---------------|---------------|---------------------------------------------------------------------------------------------------------|
+| `name`        | `undefined`   | Unique `name` of the file snapshot. Used to distinguish multiple file snapshots within the same `test`. |
+| `normalizers` | `[]`          | Custom normalizers to apply before serialization.                                                       |
 
 #### JSON Snapshot Options
 
-| Option                             | Default Value | Description                                                                                            |
-|------------------------------------|---------------|--------------------------------------------------------------------------------------------------------|
-| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted.                |
+| Option                             | Default Value | Description                                                                 |
+|------------------------------------|---------------|-----------------------------------------------------------------------------|
+| `includeUndefinedObjectProperties` | `false`       | Serializes `undefined` properties in objects. By default, they are omitted. |

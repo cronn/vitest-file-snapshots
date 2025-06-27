@@ -1,6 +1,7 @@
 # File Snapshot Testing
 
-This is a monorepo for writing tests with file snapshots, providing integrations for different testing libraries.
+This is a monorepo for writing tests with file snapshots, providing integrations
+for different testing libraries.
 
 ## Available Integrations
 

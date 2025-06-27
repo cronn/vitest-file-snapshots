@@ -44,6 +44,18 @@ describe("JSON file matcher", () => {
   test("when matcher is inverted, throws error", () => {
     expect(() => expect("value").not.toMatchJsonFile()).toThrowError();
   });
+
+  test("applies normalizer", () => {
+    function maskNumber(value: unknown): unknown {
+      if (typeof value !== "number") {
+        return value;
+      }
+
+      return "[NUMBER]";
+    }
+
+    expect({ number: 4711 }).toMatchJsonFile({ normalizers: [maskNumber] });
+  });
 });
 
 describe("text file matcher", () => {
@@ -56,6 +68,14 @@ describe("text file matcher", () => {
   test("appends name to file name", () => {
     expect.soft("value1").toMatchTextFile({ name: "value 1" });
     expect.soft("value2").toMatchTextFile({ name: "value 2" });
+  });
+
+  test("applies normalizer", () => {
+    function maskNumber(value: string): string {
+      return value.replaceAll(/\d+/g, "[NUMBER]");
+    }
+
+    expect("4711").toMatchTextFile({ normalizers: [maskNumber] });
   });
 
   test("when matcher is inverted, throws error", () => {

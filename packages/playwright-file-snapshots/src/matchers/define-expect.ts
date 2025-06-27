@@ -8,7 +8,7 @@ import { expect as baseExpect } from "@playwright/test";
 import { matchValidationFile } from "./file-matcher";
 import type {
   PlaywrightMatchJsonFileOptions,
-  PlaywrightMatchValidationFileOptions,
+  PlaywrightMatchTextFileOptions,
   PlaywrightValidationFileMatcherConfig,
   PlaywrightValidationFileMatchers,
 } from "./types";
@@ -21,11 +21,18 @@ export function defineValidationFileExpect(
     actual: unknown,
     options: PlaywrightMatchJsonFileOptions = {},
   ): MatcherReturnType {
-    const { includeUndefinedObjectProperties, ...snapshotOptions } = options;
+    const {
+      includeUndefinedObjectProperties,
+      normalizers,
+      ...snapshotOptions
+    } = options;
     return matchValidationFile({
       actual,
       name: "toMatchJsonFile",
-      serializer: new JsonSerializer({ includeUndefinedObjectProperties }),
+      serializer: new JsonSerializer({
+        includeUndefinedObjectProperties,
+        normalizers,
+      }),
       config,
       options: snapshotOptions,
       matcherState: this,
@@ -35,14 +42,15 @@ export function defineValidationFileExpect(
   function toMatchTextFile(
     this: ExpectMatcherState,
     actual: unknown,
-    options: PlaywrightMatchValidationFileOptions = {},
+    options: PlaywrightMatchTextFileOptions = {},
   ): MatcherReturnType {
+    const { normalizers, ...snapshotOptions } = options;
     return matchValidationFile({
       actual,
       name: "toMatchTextFile",
-      serializer: new TextSerializer(),
+      serializer: new TextSerializer({ normalizers }),
       config,
-      options,
+      options: snapshotOptions,
       matcherState: this,
     });
   }

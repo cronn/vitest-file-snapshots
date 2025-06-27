@@ -5,7 +5,7 @@ import { expect } from "vitest";
 import { matchValidationFile } from "./file-matcher";
 import type {
   VitestMatchJsonFileOptions,
-  VitestMatchValidationFileOptions,
+  VitestMatchTextFileOptions,
   VitestValidationFileMatcherConfig,
   VitestValidationFileMatchers,
 } from "./types";
@@ -18,10 +18,17 @@ export function registerValidationFileMatchers(
     received: unknown,
     options: VitestMatchJsonFileOptions = {},
   ): ExpectationResult {
-    const { includeUndefinedObjectProperties, ...snapshotOptions } = options;
+    const {
+      includeUndefinedObjectProperties,
+      normalizers,
+      ...snapshotOptions
+    } = options;
     return matchValidationFile({
       received,
-      serializer: new JsonSerializer({ includeUndefinedObjectProperties }),
+      serializer: new JsonSerializer({
+        includeUndefinedObjectProperties,
+        normalizers,
+      }),
       config,
       options: snapshotOptions,
       matcherState: this,
@@ -31,13 +38,14 @@ export function registerValidationFileMatchers(
   function toMatchTextFile(
     this: MatcherState,
     received: unknown,
-    options: VitestMatchValidationFileOptions = {},
+    options: VitestMatchTextFileOptions = {},
   ): ExpectationResult {
+    const { normalizers, ...snapshotOptions } = options;
     return matchValidationFile({
       received,
-      serializer: new TextSerializer(),
+      serializer: new TextSerializer({ normalizers }),
       config,
-      options,
+      options: snapshotOptions,
       matcherState: this,
     });
   }
