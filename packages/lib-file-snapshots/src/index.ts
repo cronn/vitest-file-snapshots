@@ -1,4 +1,11 @@
-export { JsonSerializer } from "./serializers/json-serializer";
-export { TextSerializer } from "./serializers/text-serializer";
+export {
+  JsonSerializer,
+  type JsonNormalizer,
+  type JsonNormalizerContext,
+} from "./serializers/json-serializer";
+export {
+  TextSerializer,
+  type TextNormalizer,
+} from "./serializers/text-serializer";
 export { ValidationFileMatcher } from "./matcher/validation-file-matcher";
 export type { SnapshotSerializer } from "./types/serializer";
