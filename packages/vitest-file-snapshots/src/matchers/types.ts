@@ -1,5 +1,7 @@
+import type { JsonNormalizer, TextNormalizer } from "@cronn/lib-file-snapshots";
+
 export interface VitestValidationFileMatchers<R = unknown> {
-  toMatchTextFile: (options?: VitestMatchValidationFileOptions) => R;
+  toMatchTextFile: (options?: VitestMatchTextFileOptions) => R;
   toMatchJsonFile: (options?: VitestMatchJsonFileOptions) => R;
 }
 
@@ -12,6 +14,14 @@ export interface VitestMatchValidationFileOptions {
   name?: string;
 }
 
+export interface VitestMatchTextFileOptions
+  extends VitestMatchValidationFileOptions {
+  /**
+   * Custom normalizers to apply before serialization
+   */
+  normalizers?: TextNormalizer[];
+}
+
 export interface VitestMatchJsonFileOptions
   extends VitestMatchValidationFileOptions {
   /**
@@ -20,6 +30,11 @@ export interface VitestMatchJsonFileOptions
    * @default false
    */
   includeUndefinedObjectProperties?: boolean;
+
+  /**
+   * Custom normalizers to apply before serialization
+   */
+  normalizers?: JsonNormalizer[];
 }
 
 export interface VitestValidationFileMatcherConfig {
