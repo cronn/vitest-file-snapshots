@@ -27,6 +27,7 @@
     "playwright:install": "playwright install chromium",
     "compile": "tsc",
     "build": "tsup",
+    "start": "serve static/",
     "ci": "biome ci . && pnpm run compile && pnpm run test:unit:coverage && pnpm run test:integration && pnpm run build"
   },
   "type": "module",
@@ -48,11 +49,14 @@
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",
     "@vitest/coverage-istanbul": "catalog:",
+    "serve": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "yaml": "catalog:"
   },
   "peerDependencies": {
-    "@playwright/test": "^1.5"
+    "@playwright/test": "^1.5",
+    "yaml": "^2"
   }
 }

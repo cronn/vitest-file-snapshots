@@ -8,9 +8,11 @@ catalog:
   "@types/node": 22.15.30
   "@vitest/coverage-istanbul": 3.2.4
   "@vitest/expect": 3.2.4
+  "serve": 14.2.4
   "tsup": 8.5.0
   "typescript": 5.8.3
   "vitest": 3.2.4
+  "yaml": 2.8.0
 
 ignoredBuiltDependencies:
   - "@biomejs/biome"

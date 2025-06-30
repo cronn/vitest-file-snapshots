@@ -159,6 +159,42 @@ test("perform login", async () => {
 });
 ```
 
+## ARIA Snapshots
+
+Playwright's [ARIA Snapshots](https://playwright.dev/docs/aria-snapshots)
+provide a way to snapshot the accessibility tree of a page. Unfortunately, they
+use YAML as serialization format, which makes it hard to programmatically
+process ARIA snapshots in TypeScript, e.g. for combining ARIA snapshots of
+multiple locators in a single snapshot.
+
+For this reason, `playwright-file-snapshots` provides the custom wrapper
+`snapshotAria` around Playwright's ARIA snapshot, which transforms the YAML
+snapshot into a JSON-compatible snapshot ready to be passed to
+`toMatchJsonFile`:
+
+```ts
+import { snapshotAria } from "@cronn/playwright-file-snapshots";
+
+test("matches ARIA snapshots", async ({ page }) => {
+  const ariaSnapshot = await snapshotAria(page.getByRole("main"));
+  expect(ariaSnapshot).toMatchJsonFile();
+});
+```
+
+To combine multiple ARIA snapshots in one JSON file, you can group them using an
+object:
+
+```ts
+import { snapshotAria } from "@cronn/playwright-file-snapshots";
+
+test("matches combined ARIA snapshots", async ({ page }) => {
+  expect({
+    nav: await snapshotAria(page.getByRole("navigation")),
+    main: await snapshotAria(page.getByRole("main"))
+  }).toMatchJsonFile();
+});
+```
+
 ## Configuration
 
 ### Matcher Options
