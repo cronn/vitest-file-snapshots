@@ -10,9 +10,9 @@ function isObject(value: unknown): value is object {
   return typeof value === "object" && value !== null && !isArray(value);
 }
 
-export function isPlainObject(
-  value: unknown,
-): value is Record<PropertyKey, unknown> {
+export type PlainObject = Record<PropertyKey, unknown>;
+
+export function isPlainObject(value: unknown): value is PlainObject {
   if (!isObject(value)) {
     return false;
   }
