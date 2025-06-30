@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Install Playwright browsers
+        run: pnpm run --filter playwright-file-snapshots playwright:install
+
       - name: Run CI script
         run: pnpm run --recursive ci
 
