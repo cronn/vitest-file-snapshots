@@ -9,3 +9,9 @@ export {
 } from "./serializers/text-serializer";
 export { ValidationFileMatcher } from "./matcher/validation-file-matcher";
 export type { SnapshotSerializer } from "./types/serializer";
+export {
+  isArray,
+  isPlainObject,
+  isString,
+  type PlainObject,
+} from "./utils/guards";
