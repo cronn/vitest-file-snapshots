@@ -1,5 +1,16 @@
 # @cronn/vitest-file-snapshots
 
+## 0.8.0
+
+### Minor Changes
+
+- 69c981c: Enable definition of custom normalizers for `toMatchTextFile` and `toMatchJsonFile`
+
+### Patch Changes
+
+- Updated dependencies [a456239]
+  - @cronn/lib-file-snapshots@0.5.0
+
 ## 0.7.0
 
 ### Minor Changes

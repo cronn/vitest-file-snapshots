@@ -1,5 +1,11 @@
 # @cronn/lib-file-snapshots
 
+## 0.5.0
+
+### Minor Changes
+
+- a456239: Enable definition of custom normalizers for `TextSerializer` and `JsonSerializer`
+
 ## 0.4.0
 
 ### Minor Changes

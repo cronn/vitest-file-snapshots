@@ -1,5 +1,16 @@
 # @cronn/playwright-file-snapshots
 
+## 0.3.0
+
+### Minor Changes
+
+- ae4de2c: Enable definition of custom normalizers for `toMatchTextFile` and `toMatchJsonFile`
+
+### Patch Changes
+
+- Updated dependencies [a456239]
+  - @cronn/lib-file-snapshots@0.5.0
+
 ## 0.2.0
 
 ### Minor Changes
