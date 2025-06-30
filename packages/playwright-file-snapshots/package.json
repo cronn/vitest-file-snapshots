@@ -24,10 +24,10 @@
     "test:unit": "vitest run",
     "test:unit:coverage": "vitest run --coverage",
     "test:integration": "playwright test",
-    "playwright:install": "playwright install chromium --with-deps",
+    "playwright:install": "playwright install chromium",
     "compile": "tsc",
     "build": "tsup",
-    "ci": "biome ci . && pnpm run compile && pnpm run test:unit:coverage && pnpm run playwright:install && pnpm run test:integration && pnpm run build"
+    "ci": "biome ci . && pnpm run compile && pnpm run test:unit:coverage && pnpm run test:integration && pnpm run build"
   },
   "type": "module",
   "exports": {
