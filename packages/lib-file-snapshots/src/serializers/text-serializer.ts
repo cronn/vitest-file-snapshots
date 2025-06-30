@@ -2,6 +2,7 @@ import type {
   SnapshotSerializer,
   SnapshotSerializerResult,
 } from "../types/serializer";
+import { isString } from "../utils/guards";
 
 export interface TextSerializerOptions {
   /**
@@ -20,7 +21,7 @@ export class TextSerializer implements SnapshotSerializer {
   }
 
   public canSerialize(value: unknown): value is string {
-    return typeof value === "string";
+    return isString(value);
   }
 
   public serialize(value: unknown): SnapshotSerializerResult {

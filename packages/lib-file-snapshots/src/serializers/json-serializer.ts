@@ -2,7 +2,7 @@ import type {
   SnapshotSerializer,
   SnapshotSerializerResult,
 } from "../types/serializer";
-import { isArray, isPlainObject } from "../utils/guards";
+import { isArray, isPlainObject, isString } from "../utils/guards";
 
 type JsonValue =
   | Record<string, unknown>
@@ -71,7 +71,7 @@ export class JsonSerializer implements SnapshotSerializer {
 
     if (
       customValue === null ||
-      typeof customValue === "string" ||
+      isString(customValue) ||
       typeof customValue === "boolean"
     ) {
       const isRoot = context === undefined;
@@ -230,7 +230,7 @@ export class JsonSerializer implements SnapshotSerializer {
   }
 
   private assertKeyType(key: unknown): asserts key is string {
-    if (!(typeof key === "string")) {
+    if (!isString(key)) {
       throw new Error(`Key of type ${typeof key} cannot be normalized.`);
     }
   }
