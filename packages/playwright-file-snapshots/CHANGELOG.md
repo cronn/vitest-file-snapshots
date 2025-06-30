@@ -1,5 +1,11 @@
 # @cronn/playwright-file-snapshots
 
+## 0.3.1
+
+### Patch Changes
+
+- 640772f: Expose interfaces for matcher options
+
 ## 0.3.0
 
 ### Minor Changes
