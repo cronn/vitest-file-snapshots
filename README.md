@@ -5,8 +5,8 @@ for different testing libraries.
 
 ## Available Integrations
 
-- [playwright-file-snapshots](https://github.com/cronn/file-snapshots/tree/main/packages/playwright-file-snapshots)
-- [vitest-file-snapshots](https://github.com/cronn/file-snapshots/tree/main/packages/vitest-file-snapshots)
+- [playwright-file-snapshots](packages/playwright-file-snapshots/README.md)
+- [vitest-file-snapshots](packages/vitest-file-snapshots/README.md)
 
 ## See Also
 
