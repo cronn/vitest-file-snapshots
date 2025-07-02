@@ -1,5 +1,11 @@
 # @cronn/lib-file-snapshots
 
+## 0.6.0
+
+### Minor Changes
+
+- 3e556d6: Expose guards
+
 ## 0.5.0
 
 ### Minor Changes

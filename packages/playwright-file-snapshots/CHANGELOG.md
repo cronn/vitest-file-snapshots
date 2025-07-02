@@ -1,5 +1,16 @@
 # @cronn/playwright-file-snapshots
 
+## 0.4.0
+
+### Minor Changes
+
+- bb16c6a: Introduce JSON-based ARIA snapshots
+
+### Patch Changes
+
+- Updated dependencies [3e556d6]
+  - @cronn/lib-file-snapshots@0.6.0
+
 ## 0.3.1
 
 ### Patch Changes

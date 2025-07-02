@@ -1,5 +1,13 @@
 # @cronn/vitest-file-snapshots
 
+## 0.8.1
+
+### Patch Changes
+
+- eef105b: Update `lib-file-snapshots`
+- Updated dependencies [3e556d6]
+  - @cronn/lib-file-snapshots@0.6.0
+
 ## 0.8.0
 
 ### Minor Changes
